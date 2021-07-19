@@ -4,7 +4,6 @@ import './App.css';
 function App() {
   return (
     <div>
-
     <div className="main-header">
       <span className="header__logo"></span>
     </div>
@@ -63,7 +62,6 @@ function App() {
         </div>
 
         <div className="card-list">
-
           <div className="card-list__item">
             <div className="card-list__item__header">
               <span> 13 400 Р  </span>
@@ -153,7 +151,6 @@ function App() {
 
             </div>
           </div>
-
           <div className="card-list__item">
             <div className="card-list__item__header">
               <span> 13 400 Р  </span>
@@ -203,10 +200,7 @@ function App() {
         <div className="card-list__item__loadmore">
           <span> Показать еще 5 билетов! </span>
         </div>
-
       </div>
-
-
     </div>
     </div>
     
