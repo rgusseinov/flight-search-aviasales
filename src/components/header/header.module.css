@@ -1,0 +1,11 @@
+.mainHeader {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.headerLogo {
+  background-image: url('../../assets/img/logo.svg');
+  width: 80px;
+  height: 85px;
+}

@@ -1,0 +1,48 @@
+
+.sortFilter {
+  display: flex;
+  background-color: #fff;
+  width: 502px;
+  height: 50px;
+}
+
+.sortFilterItem {
+  width: 168px;
+  height: 50px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #DFE5EC;
+}
+
+.sortFilterItem:hover {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+.sortFilterItem span {
+  font-weight: bold;
+}
+
+.sortFilterItem:nth-child(1) {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.sortFilterItem:nth-child(3) {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.sortFilterItem span {
+  display: block;
+}
+
+ /* active */
+.sortFilterItem:nth-child(1) {
+  background-color: #2196F3;
+  color: #fff;
+}
