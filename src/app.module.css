@@ -1,0 +1,13 @@
+
+.contentBlockRow {
+  display: flex;
+  flex-wrap: wrap;
+  width: 462px;
+  justify-content:space-between;
+}
+
+.contentBlock {
+ width: 141px;
+ height: 39px;
+}
+
