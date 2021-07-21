@@ -3,14 +3,11 @@ import './app.module.css';
 import Body from './components/body/body';
 import Header from './components/header/header';
 
-function App() {
-  return (
+const App: React.FC = () => (
     <div>
       <Header />
       <Body />
-    </div>
-    
-  );
-}
+    </div>    
+);
 
 export default App;
