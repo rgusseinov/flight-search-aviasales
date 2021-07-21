@@ -1,11 +1,22 @@
-import React from 'react';
-import api from '../../api/api';
+import React, { useEffect } from 'react';
+import { getTickets } from '../../api/api';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
 const Body: React.FC = () => {
- console.log(`api`, api);
+
+  useEffect(() => {
+    const generateAPIKey = async() => {
+      try {
+        await getTickets();
+      } catch (err){
+        console.log(err);
+      }
+    };
+    generateAPIKey();
+  });
+
  return (
   <div className={classes.main}>
     <SideBar />
