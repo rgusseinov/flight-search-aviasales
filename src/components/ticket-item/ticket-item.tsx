@@ -12,6 +12,7 @@ const TicketItem = () => {
   <div className={classes.cardListItemContent}>
 
     <div className={classes.contentBlockRow}>
+
       <div className={classes.contentBlock}>
         <span className={classes.contentBlockSecondary}>MOW – HKT</span>
         <span className={classes.contentBlockMain}>10:45 – 08:00</span>
@@ -26,6 +27,7 @@ const TicketItem = () => {
         <span className={classes.contentBlockSecondary}>2 пересадки</span>
         <span className={classes.contentBlockMain}>HHK </span>
       </div>
+      
     </div>
     
     <div className={classes.contentBlockRow}>
