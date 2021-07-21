@@ -14,10 +14,6 @@
  
 }
 
-.cardListItemHeader {
-  padding-left: 20px;
-  padding-right: 20px;
-}
 
 .cardListItemContent {
   margin-top: 20px;
@@ -36,6 +32,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .cardListItemHeader span {
@@ -73,11 +71,6 @@
   flex-wrap: wrap;
   width: 462px;
   justify-content:space-between;
-}
-
-.contentBlock {
- width: 141px;
- height: 39px;
 }
 
 .cardListItemLoadmore {

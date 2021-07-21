@@ -79,13 +79,13 @@ div.filter-item:hover {
 
 /* Checked */
 
-.check__input:checked + .check__box {
+.checkInput:checked + .checkBox {
   background-image: url(../../assets/img/on.svg);
 }
 
 /* Focused */
 
-.check__input:focus + .check__box {
+.checkInput:focus + .checkBox {
   box-shadow:
       0 0 0 0.1em #4A90E2,
       0 0 0 0.2em #7ED321;
@@ -93,10 +93,10 @@ div.filter-item:hover {
 
 /* Disabled */
 
-.check__input:disabled + .check__box {
+.checkInput:disabled + .checkBox {
   box-shadow: 0 0 0 0.1em #9B9B9B;
 }
 
-.check__input:checked:disabled + .check__box {
+.checkInput:checked:disabled + .checkBox {
   background-color: #9B9B9B;
 }

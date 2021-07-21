@@ -39,8 +39,7 @@ const SideBar = () => {
             </label>
           </div>
 
-{/* 
-          <div className="filter-item">
+{/*           <div className="filter-item">
             <label className="check option">
               <input className="check__input" type="checkbox" />
               <span className="check__box"></span> 3 пересадки

@@ -7,7 +7,7 @@ const TicketItem = () => {
   <div className={classes.cardListItem}>
   <div className={classes.cardListItemHeader}>
     <span> 13 400 Р  </span>
-    <span className={classes.cardListItemHeader}></span>
+    <span className={classes.cardListItemLogo}></span>
   </div>
   <div className={classes.cardListItemContent}>
 

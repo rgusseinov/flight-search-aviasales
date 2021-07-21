@@ -3,9 +3,9 @@ import React from 'react';
 import LoadMore from '../load-more/load-more';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
-import classes from './content.module.css';
+import classes from './container.module.css';
 
-const Content = () => {
+const Container = () => {
  return (
   <div className={classes.content}>
     <SortFilter />
@@ -15,4 +15,4 @@ const Content = () => {
  );  
 };
 
-export default Content;
+export default Container;
