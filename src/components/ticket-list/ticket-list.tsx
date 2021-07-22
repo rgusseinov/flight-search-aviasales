@@ -7,10 +7,20 @@ interface ticketListProps {
 }
 
 const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
-  console.log(tickets);
   return (
     <div className={styles.cardList}>
-      <TicketItem />
+      {
+        tickets && tickets.map((ticket, key) => {
+          return (
+            <TicketItem
+              key={key}
+              price={ticket.price}
+              carrier={ticket.carrier}
+              segments={ticket.segments}
+            />
+          );
+        })
+      }      
     </div>
   );
 };

@@ -1,26 +1,40 @@
 import React, { useEffect } from 'react';
-import { getTickets } from '../../api/api';
+import { useState } from 'react';
+import { getTickets, initiateAPIKey } from '../../api/api';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
 const Body: React.FC = () => {
 
+  const [ticketList, setTickets] = useState<any>(null);
+  
   useEffect(() => {
+    // Init Api key
     const generateAPIKey = async() => {
       try {
-        await getTickets();
-      } catch (err){
-        console.log(err);
+        await initiateAPIKey();
+      } catch (error){
+        console.error(error);
+      }
+    };
+    const getTicketList = async() => {
+      try {
+        const data = await getTickets();
+        const limitedTickets = data.tickets.splice(0, 2);
+        setTickets(limitedTickets);
+      } catch (error){
+        console.error(error);
       }
     };
     generateAPIKey();
+    getTicketList();
   });
 
  return (
   <div className={classes.main}>
     <SideBar />
-    <Container />
+    <Container tickets={ticketList}/>
   </div>
  );  
 };
