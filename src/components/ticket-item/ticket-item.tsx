@@ -1,4 +1,5 @@
 import React from 'react';
+import { convertMinuteToHM } from '../../utils/utils';
 import classes from './ticket-item.module.css';
 
 interface TicketItemProps {
@@ -44,10 +45,12 @@ const TicketItem:React.FC<TicketItemProps> = ({ price, carrier, segments }) => {
 
     {
       segments && segments.map((segment, index) => {
-      const originCity = segment.origin;
-      const destinationCity = segment.destination;
-      const date = segment.date;
-      const duration = segment.duration;
+        const originCity = segment.origin;
+        const destinationCity = segment.destination;
+        const date = segment.date;
+        const stops = segment.stops.join(',');
+        const duration = convertMinuteToHM(segment.duration);
+        console.log(stops);
 
        return (
           <div key={index} className={classes.contentBlockRow}>
@@ -63,7 +66,7 @@ const TicketItem:React.FC<TicketItemProps> = ({ price, carrier, segments }) => {
 
             <div className={classes.contentBlock}>
               <span className={classes.contentBlockSecondary}>2 пересадки</span>
-              <span className={classes.contentBlockMain}>{destinationCity} </span>
+              <span className={classes.contentBlockMain}>{stops} </span>
             </div> 
           </div>
         );
