@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './sort-filter.module.css';
 
-const SortFilter = () => {
+const SortFilter: React.FC = () => {
  return (
   <div className={classes.sortFilter}>
     <div className={classes.sortFilterItem}><span> Самый дешевый </span> </div>

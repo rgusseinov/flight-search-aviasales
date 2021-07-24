@@ -1,0 +1,26 @@
+.loader {
+  width: 80px;
+  height: 80px;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #2196F3;
+  border-color: #2196F3 transparent #2196F3 transparent;
+  animation: loader 1.2s linear infinite;
+}
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -11,6 +11,7 @@ const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
     <div className={styles.cardList}>
       {
         tickets && tickets.map((ticket, key) => {
+          
           return (
             <TicketItem
               key={key}
