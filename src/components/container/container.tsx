@@ -6,15 +6,25 @@ import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
 
 interface ticketsProps {
+  onFilterTypeChange(type: boolean): void
+  filterTypeCheap: boolean
   tickets: []
   loading: boolean
 }
 
-const Container: React.FC<ticketsProps> = ({ tickets, loading }) => {
+const Container: React.FC<ticketsProps> = ({ 
+  onFilterTypeChange,
+  filterTypeCheap,
+  tickets, 
+  loading,
+}) => {
   // console.log(tickets);
   return (
     <div className={classes.content}>
-      <SortFilter />
+      <SortFilter 
+        onFilterTypeChange={onFilterTypeChange}
+        filterTypeCheap={filterTypeCheap}
+      />
       { loading ? (<Loader />) : (
         <div>
           <TicketList tickets={tickets} />

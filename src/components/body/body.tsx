@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { getTickets, initiateAPIKey } from '../../api/api';
+import { initiateAPIKey } from '../../api/api';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
@@ -9,16 +9,52 @@ const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [stopType1, setStopType] = useState<boolean>(false);
-  
-  const onStopChange1 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
-    // console.log(`stop`, stop);
-    setStopType(stop);
-    getTickets();
-  };
-      
-  useEffect(() => {
 
+  const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
+
+  const [stopTypeAll, setStopTypeAll] = useState<boolean>(true);
+  const [stopType1, setStopType1] = useState<boolean>(true);
+  const [stopType2, setStopType2] = useState<boolean>(true);
+  const [stopType3, setStopType3] = useState<boolean>(true);
+
+  // Sort Type
+
+  const onStopChangeAll = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
+    if (stop){
+      setStopTypeAll(true);
+      setStopType1(true);
+      setStopType2(true);
+      setStopType3(true);
+    } else {
+      setStopTypeAll(false);
+      setStopType1(!stopType1);
+      setStopType2(!stopType2);
+      setStopType3(!stopType3);
+    }
+  };
+
+  const onStopChange1 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
+    setStopTypeAll(false);
+    setStopType1(stop);
+  };
+  
+  const onStopChange2 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
+    setStopTypeAll(false);
+    setStopType2(stop);
+  };
+
+  const onStopChange3 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
+    setStopTypeAll(false);
+    setStopType3(stop);
+  };
+        
+  // Filter type
+
+  const onFilterTypeChange = (type: boolean) => {
+    setFilterTypeCheap(type);
+  };
+
+  useEffect(() => {
     const generateAPIKey = async() => {
       try {
         await initiateAPIKey();
@@ -39,23 +75,36 @@ const Body: React.FC = () => {
   
     if (response.ok) {
         const data = await response.json();
+        let finalTickets:[] = [];
 
         if (!data.stop) {
           setLoading(true);
           await getTickets();
         } else {
+          const sortTypes: any = []; // 1, 2, 3 | 3, 2, 1 | 2, 1, 3
 
-          const filteredTickets = data.tickets.filter((ticket: any) => {
-            if (stopType1){
-              if (ticket.segments[0].stops.length === 1){
-                return ticket;
-              }
-            } else {
+          if (stopType1) sortTypes.push(1);
+          if (stopType2) sortTypes.push(2);
+          if (stopType3) sortTypes.push(3);
+
+          // console.log(`sortTypes`, sortTypes);
+          
+          const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
+            if (sortTypes.length === 0 || stopTypeAll){
+              return ticket;
+            } else
+            if (sortTypes.includes(ticket.segments[0].stops.length)){       
               return ticket;
             }
           });
 
-          setTickets(filteredTickets);
+          finalTickets = filteredTicketsByStops;
+
+          if (filterTypeCheap){
+            finalTickets = filteredTicketsByStops.slice().sort(sort('price'));
+          }
+
+          setTickets(finalTickets);
           setLoading(false);
           // return tickets;
         }
@@ -68,17 +117,31 @@ const Body: React.FC = () => {
     }
   };
 
- return (
-  <div className={classes.main}>
-    <SideBar
-      stopType1={stopType1}
-      onStopChange1={onStopChange1}
-    />
-    <Container 
-      tickets={ticketList}
-      loading={loading}
-    />
-  </div>
+  const sort = (field: string) => {
+    return (a: any, b: any) => (a[field] > b[field]) ? 1 : -1;
+  };
+  
+  return (
+    <div className={classes.main}>
+      <SideBar
+        stopTypeAll={stopTypeAll}
+        stopType1={stopType1}
+        stopType2={stopType2}
+        stopType3={stopType3}     
+        
+        onStopChangeAll={onStopChangeAll}
+        onStopChange1={onStopChange1}
+        onStopChange2={onStopChange2}
+        onStopChange3={onStopChange3}
+
+      />
+      <Container
+        tickets={ticketList}
+        loading={loading}
+        filterTypeCheap={filterTypeCheap}
+        onFilterTypeChange={onFilterTypeChange}
+      />
+    </div>
  );  
 };
 

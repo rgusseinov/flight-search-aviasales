@@ -42,7 +42,7 @@
 }
 
  /* active */
-.sortFilterItem:nth-child(1) {
+.activeSortFilterItem {
   background-color: #2196F3;
   color: #fff;
 }
