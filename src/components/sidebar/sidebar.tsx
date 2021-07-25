@@ -1,13 +1,18 @@
 import React from 'react';
 import styles from './sidebar.module.css';
 import cn from 'classnames';
+// import { useState } from 'react';
 
 interface sideBarProps {
-  onStopChange(type: number): void
+  onStopChange1(evt: React.FormEvent<HTMLInputElement>, type: boolean): void
+  stopType1: boolean | undefined
 }
 
-const SideBar: React.FC<sideBarProps> = ({ onStopChange }) => {
- return (
+const SideBar: React.FC<sideBarProps> = ({ onStopChange1, stopType1 }) => {
+  
+  // const [stop1, stop1Checked] = useState<boolean>(false);
+
+  return (
     <div className={cn(styles.sidebar)}>
       <div className={cn(styles.filterContainer)}>
         <div className={cn(styles.header)}> Количество пересадок </div>
@@ -24,21 +29,29 @@ const SideBar: React.FC<sideBarProps> = ({ onStopChange }) => {
 
           <div className={cn(styles.filterItem)}>
             <label className={cn(styles.check, styles.option)}>
-              <input className={styles.checkInput} type="checkbox" onChange={() => onStopChange(1)} />
+              <input 
+                className={styles.checkInput} 
+                type="checkbox"
+                checked={stopType1}
+                onChange={(evt) => onStopChange1(evt, !stopType1)}
+               />
               <span className={styles.checkBox}></span> 1 пересадка
             </label>
           </div>
 
           <div className={cn(styles.filterItem)}>
             <label className={cn(styles.check, styles.option)}>
-              <input className={styles.checkInput} type="checkbox" onChange={() => onStopChange(2)}/>
+              <input
+                className={styles.checkInput} 
+                type="checkbox"
+              />
               <span className={styles.checkBox}></span> 2 пересадки
             </label>
           </div>
 
           <div className={cn(styles.filterItem)}>
             <label className={cn(styles.check, styles.option)}>
-              <input className={styles.checkInput} type="checkbox" onChange={() => onStopChange(3)} />
+              <input className={styles.checkInput} type="checkbox" />
               <span className={styles.checkBox}></span> 3 пересадки
             </label>
           </div>

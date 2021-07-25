@@ -8,16 +8,17 @@ import classes from './body.module.css';
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [stopType, setStopType] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [stopType1, setStopType] = useState<boolean>(false);
   
-  const onStopChange = (stop: number) => {
+  const onStopChange1 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
     // console.log(`stop`, stop);
     setStopType(stop);
+    getTickets();
   };
       
   useEffect(() => {
-    // Init Api key
+
     const generateAPIKey = async() => {
       try {
         await initiateAPIKey();
@@ -25,39 +26,54 @@ const Body: React.FC = () => {
         console.error(error);
       }
     };
-    const getTicketList = async() => {
-      try {
-        const data = await getTickets();
-        const limitedTickets = data.tickets;
-        
+
+    generateAPIKey();
+    getTickets();
+
+  });
+
+
+  const getTickets = async() => {
+    const token = localStorage.getItem('SEARCH_KEY');
+    const response = await fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${token}`);
+  
+    if (response.ok) {
+        const data = await response.json();
+
         if (!data.stop) {
           setLoading(true);
-          getTicketList();
+          await getTickets();
         } else {
-          setLoading(false);
-          const filteredTickets = limitedTickets.filter((ticket: any) => {
-            if (stopType > 0) {
-              if (ticket.segments[0].stops.length == stopType) return ticket;
+
+          const filteredTickets = data.tickets.filter((ticket: any) => {
+            if (stopType1){
+              if (ticket.segments[0].stops.length === 1){
+                return ticket;
+              }
             } else {
               return ticket;
             }
           });
-          setTickets(filteredTickets.slice(0, 5));
-          console.log(`tickets`, filteredTickets);
+
+          setTickets(filteredTickets);
+          setLoading(false);
+          // return tickets;
         }
-
-      } catch (error){
-        console.error(`ERR: `, error);
-      }
-    };
-    generateAPIKey();
-    getTicketList();
-  });
-
+    } else if (response.status == 404) {
+      // await getTickets();
+    } else {
+      
+      setLoading(true);
+      await getTickets();
+    }
+  };
 
  return (
   <div className={classes.main}>
-    <SideBar onStopChange={onStopChange} />
+    <SideBar
+      stopType1={stopType1}
+      onStopChange1={onStopChange1}
+    />
     <Container 
       tickets={ticketList}
       loading={loading}

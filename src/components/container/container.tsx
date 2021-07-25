@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadMore from '../load-more/load-more';
+// import LoadMore from '../load-more/load-more';
 import Loader from '../loader/loader';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
@@ -18,7 +18,7 @@ const Container: React.FC<ticketsProps> = ({ tickets, loading }) => {
       { loading ? (<Loader />) : (
         <div>
           <TicketList tickets={tickets} />
-          <LoadMore />
+          {/* <LoadMore /> */}
         </div>
         )
       }
