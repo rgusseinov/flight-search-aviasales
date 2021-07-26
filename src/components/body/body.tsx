@@ -8,6 +8,7 @@ import classes from './body.module.css';
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
+  const [ticketLimit, setTicketLimit] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
@@ -47,11 +48,16 @@ const Body: React.FC = () => {
     setStopTypeAll(false);
     setStopType3(stop);
   };
-        
+    
   // Filter type
 
   const onFilterTypeChange = (type: boolean) => {
     setFilterTypeCheap(type);
+  };
+
+
+  const onTicketLimitChange = (ticketLimit: number) => {
+    setTicketLimit(ticketLimit);
   };
 
   useEffect(() => {
@@ -104,7 +110,7 @@ const Body: React.FC = () => {
             finalTickets = filteredTicketsByStops.slice().sort(sort('price'));
           }
 
-          setTickets(finalTickets);
+          setTickets(finalTickets.slice(0, ticketLimit));
           setLoading(false);
           // return tickets;
         }
@@ -138,8 +144,10 @@ const Body: React.FC = () => {
       <Container
         tickets={ticketList}
         loading={loading}
+        ticketLimit={ticketLimit}
         filterTypeCheap={filterTypeCheap}
         onFilterTypeChange={onFilterTypeChange}
+        onTicketLimitChange={onTicketLimitChange}
       />
     </div>
  );  
