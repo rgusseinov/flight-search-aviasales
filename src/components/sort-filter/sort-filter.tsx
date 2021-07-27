@@ -3,12 +3,16 @@ import classes from './sort-filter.module.css';
 
 interface sortFilterProps {
   onFilterTypeChange(type: boolean): void
+  onFilterFastChange(type: boolean): void
   filterTypeCheap: boolean
+  filterTypeFast: boolean
 }
 
 const SortFilter: React.FC<sortFilterProps> = ({
-  onFilterTypeChange, 
-  filterTypeCheap 
+  onFilterTypeChange,
+  onFilterFastChange,
+  filterTypeCheap,
+  filterTypeFast
 }) => {
  return (
   <div className={classes.sortFilter}>
@@ -17,7 +21,11 @@ const SortFilter: React.FC<sortFilterProps> = ({
       onClick={() => onFilterTypeChange(!filterTypeCheap)}>
       <span> Самый дешевый  </span>
     </div>
-    <div className={classes.sortFilterItem}><span> Самый быстрый </span> </div>
+    <div 
+      className={`${classes.sortFilterItem} ${filterTypeFast ? classes.activeSortFilterItem : ''}`}
+      onClick={() => onFilterFastChange(!filterTypeFast)}>
+      <span> Самый быстрый </span>
+    </div>
     <div className={classes.sortFilterItem}><span>  Оптимальный  </span> </div>
   </div>
  );

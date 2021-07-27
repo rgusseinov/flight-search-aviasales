@@ -13,6 +13,8 @@ const Body: React.FC = () => {
 
   const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
 
+  const [filterTypeFast, setFilterTypeFast] = useState<boolean>(false);
+
   const [stopTypeAll, setStopTypeAll] = useState<boolean>(true);
   const [stopType1, setStopType1] = useState<boolean>(true);
   const [stopType2, setStopType2] = useState<boolean>(true);
@@ -55,10 +57,16 @@ const Body: React.FC = () => {
     setFilterTypeCheap(type);
   };
 
+  const onFilterFastChange = (type: boolean) => {
+    setFilterTypeFast(type);
+  };
+
 
   const onTicketLimitChange = (ticketLimit: number) => {
     setTicketLimit(ticketLimit);
   };
+
+
 
   useEffect(() => {
     const generateAPIKey = async() => {
@@ -93,8 +101,6 @@ const Body: React.FC = () => {
           if (stopType2) sortTypes.push(2);
           if (stopType3) sortTypes.push(3);
 
-          // console.log(`sortTypes`, sortTypes);
-          
           const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
             if (sortTypes.length === 0 || stopTypeAll){
               return ticket;
@@ -107,10 +113,16 @@ const Body: React.FC = () => {
           finalTickets = filteredTicketsByStops;
 
           if (filterTypeCheap){
-            finalTickets = filteredTicketsByStops.slice().sort(sort('price'));
+            setFilterTypeFast(false);
+            finalTickets = filteredTicketsByStops.slice().sort(sortByCheap('price'));
           }
 
-          setTickets(finalTickets.slice(0, ticketLimit));
+          if (filterTypeFast){
+            setFilterTypeCheap(false);
+            finalTickets = filteredTicketsByStops.slice().sort(sortByFast('duration'));
+          }
+
+          setTickets(finalTickets.slice(0, 5));
           setLoading(false);
           // return tickets;
         }
@@ -123,8 +135,12 @@ const Body: React.FC = () => {
     }
   };
 
-  const sort = (field: string) => {
+  const sortByCheap = (field: string) => {
     return (a: any, b: any) => (a[field] > b[field]) ? 1 : -1;
+  };
+
+  const sortByFast = (field: string) => {
+    return (a: any, b: any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
   };
   
   return (
@@ -146,8 +162,11 @@ const Body: React.FC = () => {
         loading={loading}
         ticketLimit={ticketLimit}
         filterTypeCheap={filterTypeCheap}
+        filterTypeFast={filterTypeFast}
         onFilterTypeChange={onFilterTypeChange}
+        onFilterFastChange={onFilterFastChange}
         onTicketLimitChange={onTicketLimitChange}
+        
       />
     </div>
  );  

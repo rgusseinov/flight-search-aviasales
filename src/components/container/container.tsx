@@ -7,8 +7,10 @@ import classes from './container.module.css';
 
 interface ticketsProps {
   onFilterTypeChange(type: boolean): void
+  onFilterFastChange(type: boolean): void
   onTicketLimitChange(ticketLimit: number): void
   filterTypeCheap: boolean
+  filterTypeFast: boolean
   tickets: []
   loading: boolean
   ticketLimit: number
@@ -16,8 +18,10 @@ interface ticketsProps {
 
 const Container: React.FC<ticketsProps> = ({ 
   onFilterTypeChange,
+  onFilterFastChange,
   onTicketLimitChange,
   filterTypeCheap,
+  filterTypeFast,
   tickets, 
   loading,
   ticketLimit,
@@ -25,9 +29,11 @@ const Container: React.FC<ticketsProps> = ({
   // console.log(tickets);
   return (
     <div className={classes.content}>
-      <SortFilter 
+      <SortFilter
         onFilterTypeChange={onFilterTypeChange}
+        onFilterFastChange={onFilterFastChange}
         filterTypeCheap={filterTypeCheap}
+        filterTypeFast={filterTypeFast}
       />
       { loading ? (<Loader />) : (
         <div>
