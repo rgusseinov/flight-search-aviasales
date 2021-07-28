@@ -11,53 +11,26 @@ const Body: React.FC = () => {
   const [ticketLimit, setTicketLimit] = useState<number>(5);
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
-  // const [filterTypeFast, setFilterTypeFast] = useState<boolean>(false);
+  const [sortType, setSortType] = useState<any>([]);
   const [filterType, setFilterType] = useState<any>([]);
-
-  const [stopTypeAll, setStopTypeAll] = useState<boolean>(true);
-  const [stopType1, setStopType1] = useState<boolean>(true);
-  const [stopType2, setStopType2] = useState<boolean>(true);
-  const [stopType3, setStopType3] = useState<boolean>(true);
-
-
-  // 1. Sort Types
-
-  const onStopChangeAll = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
-    if (stop){
-      setStopTypeAll(true);
-      setStopType1(true);
-      setStopType2(true);
-      setStopType3(true);
-    } else {
-      setStopTypeAll(false);
-      setStopType1(!stopType1);
-      setStopType2(!stopType2);
-      setStopType3(!stopType3);
-    }
-  };
-
-  const onStopChange1 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
-    setStopTypeAll(false);
-    setStopType1(stop);
-  };
-  
-  const onStopChange2 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
-    setStopTypeAll(false);
-    setStopType2(stop);
-  };
-
-  const onStopChange3 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
-    setStopTypeAll(false);
-    setStopType3(stop);
-  };   
-
 
 
   // 2. Filter types
   const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const type = e.target.dataset;
-    setFilterType(type);
+    
+    if (e.target.classList.contains('is-active')){
+      e.target.classList.remove('is-active');
+      setFilterType({});
+    } else {
+      e.target.classList.add('is-active');
+      setFilterType(type);
+    }
+    
+  };
+
+  const onSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`Sort`);
   };
 
   // 3. Lode more button
@@ -93,34 +66,27 @@ const Body: React.FC = () => {
           setLoading(true);
           await getTickets();
         } else {
-          const sortTypes: any = []; // 1, 2, 3 | 3, 2, 1 | 2, 1, 3
+          // const sortTypes: any = []; // 1, 2, 3 | 3, 2, 1 | 2, 1, 3
 
-          if (stopType1) sortTypes.push(1);
-          if (stopType2) sortTypes.push(2);
-          if (stopType3) sortTypes.push(3);
 
-          const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
+/*           const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
             if (sortTypes.length === 0 || stopTypeAll){
               return ticket;
             } else
             if (sortTypes.includes(ticket.segments[0].stops.length)){       
               return ticket;
             }
-          });
+          }); */
 
-          let filteredTickets: [] = filteredTicketsByStops;
-
-          console.log(filterType.type);
+/*           let filteredTickets: [] = filteredTicketsByStops;
 
           if (filterType.type === 'cheap'){
             filteredTickets = filteredTicketsByStops.slice().sort(sortByCheap('price'));
           } else if (filterType.type === 'quick'){
             filteredTickets = filteredTicketsByStops.slice().sort(sortByFast('duration'));
+          } */
 
-            // console.log('initial', filteredTicketsByStops, 'filteredTickets', filteredTickets);
-          }
-
-          setTickets(filteredTickets.slice(0, ticketLimit));
+          setTickets([]);
           setLoading(false);
           // return tickets;
         }
@@ -144,16 +110,11 @@ const Body: React.FC = () => {
   return (
     <div className={classes.main}>
       <SideBar
-        stopTypeAll={stopTypeAll}
-        stopType1={stopType1}
-        stopType2={stopType2}
-        stopType3={stopType3}     
-        
+/*         stopTypeAll={stopTypeAll}
         onStopChangeAll={onStopChangeAll}
-        onStopChange1={onStopChange1}
-        onStopChange2={onStopChange2}
-        onStopChange3={onStopChange3}
-
+        onSortTypeChange={onSortTypeChange} */
+        sortType={sortType}
+        onSortTypeChange={onSortTypeChange}
       />
       <Container
         tickets={ticketList}
@@ -161,10 +122,6 @@ const Body: React.FC = () => {
         ticketLimit={ticketLimit}
         filterType={filterType}
         onFilterTypeChange={onFilterTypeChange}
-        // filterTypeCheap={filterTypeCheap}
-        // filterTypeFast={filterTypeFast}
-        // onFilterTypeChange={onFilterTypeChange}
-        // onFilterFastChange={onFilterFastChange}
         onTicketLimitChange={onTicketLimitChange}
         
       />
