@@ -18,13 +18,13 @@ const SortFilter: React.FC<sortFilterProps> = ({
   <div className={classes.sortFilter}>
     <div 
       className={`${classes.sortFilterItem} ${filterTypeCheap ? classes.activeSortFilterItem : ''}`}
-      onClick={() => onFilterTypeChange(!filterTypeCheap)}>
-      <span> Самый дешевый  </span>
+      onClick={() => onFilterTypeChange(filterTypeCheap)}>
+      <span> Самый дешевый {filterTypeCheap ? 'yes' : 'no'}  </span>
     </div>
     <div 
       className={`${classes.sortFilterItem} ${filterTypeFast ? classes.activeSortFilterItem : ''}`}
-      onClick={() => onFilterFastChange(!filterTypeFast)}>
-      <span> Самый быстрый </span>
+      onClick={() => onFilterFastChange(filterTypeFast)}>
+      <span> Самый быстрый  {filterTypeFast ? 'yes' : 'no'} </span>
     </div>
     <div className={classes.sortFilterItem}><span>  Оптимальный  </span> </div>
   </div>

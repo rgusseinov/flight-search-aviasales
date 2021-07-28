@@ -8,11 +8,10 @@ import classes from './body.module.css';
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
-  const [ticketLimit, setTicketLimit] = useState<number>(1);
+  const [ticketLimit, setTicketLimit] = useState<number>(5);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
-
   const [filterTypeFast, setFilterTypeFast] = useState<boolean>(false);
 
   const [stopTypeAll, setStopTypeAll] = useState<boolean>(true);
@@ -20,7 +19,8 @@ const Body: React.FC = () => {
   const [stopType2, setStopType2] = useState<boolean>(true);
   const [stopType3, setStopType3] = useState<boolean>(true);
 
-  // Sort Type
+
+  // Filters
 
   const onStopChangeAll = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
     if (stop){
@@ -49,23 +49,26 @@ const Body: React.FC = () => {
   const onStopChange3 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
     setStopTypeAll(false);
     setStopType3(stop);
-  };
-    
-  // Filter type
+  };   
+
+
+
+  // Sort types
 
   const onFilterTypeChange = (type: boolean) => {
-    setFilterTypeCheap(type);
+    setFilterTypeCheap(!type);
   };
 
   const onFilterFastChange = (type: boolean) => {
-    setFilterTypeFast(type);
+    console.log(`before`, type, `after`, !type);
+    setFilterTypeFast(!type);
   };
+  
 
-
+  // Lode more button
   const onTicketLimitChange = (ticketLimit: number) => {
     setTicketLimit(ticketLimit);
   };
-
 
 
   useEffect(() => {
@@ -122,7 +125,7 @@ const Body: React.FC = () => {
             finalTickets = filteredTicketsByStops.slice().sort(sortByFast('duration'));
           }
 
-          setTickets(finalTickets.slice(0, 5));
+          setTickets(finalTickets.slice(0, ticketLimit));
           setLoading(false);
           // return tickets;
         }
