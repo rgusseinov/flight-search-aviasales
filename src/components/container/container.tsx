@@ -6,9 +6,9 @@ import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
 
 interface ticketsProps {
-  onFilterTypeChange(type: boolean): void
+  onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
   onTicketLimitChange(ticketLimit: number): void
-  filterTypeCheap: boolean
+  filterType: any
   tickets: []
   loading: boolean
   ticketLimit: number
@@ -17,7 +17,7 @@ interface ticketsProps {
 const Container: React.FC<ticketsProps> = ({ 
   onFilterTypeChange,
   onTicketLimitChange,
-  filterTypeCheap,
+  filterType,
   tickets, 
   loading,
   ticketLimit,
@@ -25,9 +25,9 @@ const Container: React.FC<ticketsProps> = ({
   // console.log(tickets);
   return (
     <div className={classes.content}>
-      <SortFilter 
+      <SortFilter
         onFilterTypeChange={onFilterTypeChange}
-        filterTypeCheap={filterTypeCheap}
+        filterType={filterType}
       />
       { loading ? (<Loader />) : (
         <div>

@@ -11,14 +11,17 @@ const Body: React.FC = () => {
   const [ticketLimit, setTicketLimit] = useState<number>(5);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
+  // const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
+  // const [filterTypeFast, setFilterTypeFast] = useState<boolean>(false);
+  const [filterType, setFilterType] = useState<any>([]);
 
   const [stopTypeAll, setStopTypeAll] = useState<boolean>(true);
   const [stopType1, setStopType1] = useState<boolean>(true);
   const [stopType2, setStopType2] = useState<boolean>(true);
   const [stopType3, setStopType3] = useState<boolean>(true);
 
-  // Sort Type
+
+  // 1. Sort Types
 
   const onStopChangeAll = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
     if (stop){
@@ -47,18 +50,21 @@ const Body: React.FC = () => {
   const onStopChange3 = (evt: React.FormEvent<HTMLInputElement>, stop: boolean) => {
     setStopTypeAll(false);
     setStopType3(stop);
+  };   
+
+
+
+  // 2. Filter types
+  const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const type = e.target.dataset;
+    setFilterType(type);
   };
-    
-  // Filter type
 
-  const onFilterTypeChange = (type: boolean) => {
-    setFilterTypeCheap(type);
-  };
-
-
+  // 3. Lode more button
   const onTicketLimitChange = (ticketLimit: number) => {
     setTicketLimit(ticketLimit);
   };
+
 
   useEffect(() => {
     const generateAPIKey = async() => {
@@ -81,7 +87,7 @@ const Body: React.FC = () => {
   
     if (response.ok) {
         const data = await response.json();
-        let finalTickets:[] = [];
+        // let finalTickets:[] = [];
 
         if (!data.stop) {
           setLoading(true);
@@ -93,7 +99,6 @@ const Body: React.FC = () => {
           if (stopType2) sortTypes.push(2);
           if (stopType3) sortTypes.push(3);
 
-          
           const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
             if (sortTypes.length === 0 || stopTypeAll){
               return ticket;
@@ -103,13 +108,19 @@ const Body: React.FC = () => {
             }
           });
 
-          finalTickets = filteredTicketsByStops;
+          let filteredTickets: [] = filteredTicketsByStops;
 
-          if (filterTypeCheap){
-            finalTickets = filteredTicketsByStops.slice().sort(sort('price'));
+          console.log(filterType.type);
+
+          if (filterType.type === 'cheap'){
+            filteredTickets = filteredTicketsByStops.slice().sort(sortByCheap('price'));
+          } else if (filterType.type === 'quick'){
+            filteredTickets = filteredTicketsByStops.slice().sort(sortByFast('duration'));
+
+            // console.log('initial', filteredTicketsByStops, 'filteredTickets', filteredTickets);
           }
 
-          setTickets(finalTickets.slice(0, ticketLimit));
+          setTickets(filteredTickets.slice(0, ticketLimit));
           setLoading(false);
           // return tickets;
         }
@@ -122,8 +133,12 @@ const Body: React.FC = () => {
     }
   };
 
-  const sort = (field: string) => {
+  const sortByCheap = (field: string) => {
     return (a: any, b: any) => (a[field] > b[field]) ? 1 : -1;
+  };
+
+  const sortByFast = (field: string) => {
+    return (a: any, b: any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
   };
   
   return (
@@ -144,9 +159,14 @@ const Body: React.FC = () => {
         tickets={ticketList}
         loading={loading}
         ticketLimit={ticketLimit}
-        filterTypeCheap={filterTypeCheap}
+        filterType={filterType}
         onFilterTypeChange={onFilterTypeChange}
+        // filterTypeCheap={filterTypeCheap}
+        // filterTypeFast={filterTypeFast}
+        // onFilterTypeChange={onFilterTypeChange}
+        // onFilterFastChange={onFilterFastChange}
         onTicketLimitChange={onTicketLimitChange}
+        
       />
     </div>
  );  

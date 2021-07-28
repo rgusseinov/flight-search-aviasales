@@ -4,7 +4,7 @@ import classes from './header.module.css';
 const Header: React.FC = () => {
  return (
   <div className={classes.mainHeader}>
-    <span className={classes.header__logo}></span>
+    <span className={classes.headerLogo}></span>
   </div>
   );
 };

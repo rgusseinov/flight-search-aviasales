@@ -11,3 +11,12 @@ const App: React.FC = () => (
 );
 
 export default App;
+
+/*
+
+What to lear:
+
+1. Typescript syntetics event
+2. Types, how to mention array of objects
+
+*/
