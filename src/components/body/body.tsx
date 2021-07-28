@@ -8,7 +8,7 @@ import classes from './body.module.css';
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
-  const [ticketLimit, setTicketLimit] = useState<number>(1);
+  const [ticketLimit, setTicketLimit] = useState<number>(5);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [filterTypeCheap, setFilterTypeCheap] = useState<boolean>(false);
@@ -93,7 +93,6 @@ const Body: React.FC = () => {
           if (stopType2) sortTypes.push(2);
           if (stopType3) sortTypes.push(3);
 
-          // console.log(`sortTypes`, sortTypes);
           
           const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
             if (sortTypes.length === 0 || stopTypeAll){
