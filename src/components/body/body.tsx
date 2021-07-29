@@ -14,25 +14,25 @@ const Body: React.FC = () => {
   const [sortType, setSortType] = useState<any>([]);
   const [filterType, setFilterType] = useState<any>([]);
 
-
-  // 2. Filter types
+  // 1. Filter types // top
   const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const type = e.target.dataset;
-    
-    if (e.target.classList.contains('is-active')){
-      e.target.classList.remove('is-active');
-      setFilterType({});
-    } else {
-      e.target.classList.add('is-active');
-      setFilterType(type);
-    }
-    
+       
+    setFilterType({
+      [e.target.value]: e.target.checked
+    });
+
   };
 
+
+  // 2. Sort type // Side bar
   const onSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(`Sort`);
+    setSortType({
+      ...sortType,
+      [e.target.name]: e.target.checked
+    });   
   };
 
+  
   // 3. Lode more button
   const onTicketLimitChange = (ticketLimit: number) => {
     setTicketLimit(ticketLimit);
@@ -60,40 +60,33 @@ const Body: React.FC = () => {
   
     if (response.ok) {
         const data = await response.json();
-        // let finalTickets:[] = [];
+        const flightStops:Array<number> = [];
 
         if (!data.stop) {
           setLoading(true);
           await getTickets();
         } else {
-          // const sortTypes: any = []; // 1, 2, 3 | 3, 2, 1 | 2, 1, 3
-
-
-/*           const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
-            if (sortTypes.length === 0 || stopTypeAll){
+         
+          if (sortType.stop1) flightStops.push(1);
+          if (sortType.stop2) flightStops.push(2);
+          if (sortType.stop3) flightStops.push(3);
+     
+          const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
+            if (flightStops.includes(ticket.segments[0].stops.length)){  
               return ticket;
-            } else
-            if (sortTypes.includes(ticket.segments[0].stops.length)){       
+            } else if (flightStops.length === 0){
               return ticket;
             }
-          }); */
-
-/*           let filteredTickets: [] = filteredTicketsByStops;
-
-          if (filterType.type === 'cheap'){
-            filteredTickets = filteredTicketsByStops.slice().sort(sortByCheap('price'));
-          } else if (filterType.type === 'quick'){
-            filteredTickets = filteredTicketsByStops.slice().sort(sortByFast('duration'));
-          } */
-
-          setTickets([]);
+          });
+          setTickets(filteredTicketsByStops);
           setLoading(false);
-          // return tickets;
-        }
+          
+          console.log(`flightStops`, flightStops);
+
+      }
     } else if (response.status == 404) {
       // await getTickets();
     } else {
-      
       setLoading(true);
       await getTickets();
     }
@@ -106,7 +99,9 @@ const Body: React.FC = () => {
   const sortByFast = (field: string) => {
     return (a: any, b: any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
   };
-  
+
+  // console.log(`filterType`, filterType);
+
   return (
     <div className={classes.main}>
       <SideBar
