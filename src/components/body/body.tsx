@@ -59,29 +59,19 @@ const Body: React.FC = () => {
     const response = await fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${token}`);
   
     if (response.ok) {
-        const data = await response.json();
-        const flightStops:Array<number> = [];
+        const data = await response.json();        
 
         if (!data.stop) {
           setLoading(true);
           await getTickets();
         } else {
          
-          if (sortType.stop1) flightStops.push(1);
-          if (sortType.stop2) flightStops.push(2);
-          if (sortType.stop3) flightStops.push(3);
-     
-          const filteredTicketsByStops = data.tickets.filter((ticket: any) => {
-            if (flightStops.includes(ticket.segments[0].stops.length)){  
-              return ticket;
-            } else if (flightStops.length === 0){
-              return ticket;
-            }
-          });
-          setTickets(filteredTicketsByStops);
+      
+          const filteredTickets:any  = getFilteredTickets(sortType, filterType, data.tickets);
+          setTickets(filteredTickets);
           setLoading(false);
           
-          console.log(`flightStops`, flightStops);
+          // console.log(`filteredTickets`, filteredTickets);
 
       }
     } else if (response.status == 404) {
@@ -90,6 +80,34 @@ const Body: React.FC = () => {
       setLoading(true);
       await getTickets();
     }
+  };
+
+  const getFilteredTickets = (sortType: any, filterType:any, tickets:[]) => {
+
+    const flightStops:Array<number> = [];
+    let ticketList:Array<any> = tickets;
+
+    if (sortType.stop1) flightStops.push(1);
+    if (sortType.stop2) flightStops.push(2);
+    if (sortType.stop3) flightStops.push(3);    
+    
+    // console.log(`flightStops`, flightStops);
+
+    if (flightStops.length > 0){
+      ticketList = tickets.filter((ticket: any) => {
+        if (flightStops.includes(ticket.segments[0].stops.length)){  
+          return ticket;
+        }
+      });
+    }
+
+    if (filterType.cheap){
+      ticketList = ticketList.slice().sort(sortByCheap('price'));
+    } else if (filterType.quick){
+      ticketList = ticketList.slice().sort(sortByFast('duration'));
+    }
+  
+    return ticketList;
   };
 
   const sortByCheap = (field: string) => {
