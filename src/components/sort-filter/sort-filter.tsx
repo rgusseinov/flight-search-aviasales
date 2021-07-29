@@ -6,12 +6,7 @@ interface sortFilterProps {
   filterType: any 
 }
 
-const SortFilter: React.FC<sortFilterProps> = ({
-  onFilterTypeChange,
-  filterType
-}) => {
-  
-  // console.log(`filterType`, filterType);
+const SortFilter: React.FC<sortFilterProps> = ({  onFilterTypeChange, filterType }) => {
 
   return (
     <div className={classes.sortFilter}>
@@ -24,7 +19,7 @@ const SortFilter: React.FC<sortFilterProps> = ({
       />
       <label htmlFor="radioCheap"> Самый дешевый </label>
 
-      <input 
+      <input
         type="radio"
         id="radioQuick"
         name="quick"
@@ -36,23 +31,6 @@ const SortFilter: React.FC<sortFilterProps> = ({
 
       <input type="radio" id="radioOptimal" name="optimal" value="optimal" />
       <label htmlFor="radioOptimal"> Оптимальный </label>
-
-
-{/*       <div
-        data-type="cheap"
-        className={`${classes.sortFilterItem} ${(filterType.type === 'cheap') ? classes.activeSortFilterItem : ''}`}
-        onClick={(e) => onFilterTypeChange(e)}>
-        <span data-type="cheap"> Самый дешевый  </span>
-      </div>
-      <div
-        data-type="quick"
-        className={`${classes.sortFilterItem} ${(filterType.type === 'quick') ? classes.activeSortFilterItem : ''}`}
-        onClick={(e) => onFilterTypeChange(e)}>
-        <span data-type="quick"> Самый быстрый  </span>
-      </div>
-      <div className={classes.sortFilterItem}><span>  Оптимальный  </span> </div>
- */}
-
     </div>
   );
 };

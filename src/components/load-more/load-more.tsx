@@ -2,14 +2,13 @@ import React from 'react';
 import classes from './load-more.module.css';
 
 interface loadMoreProps {
-  onTicketLimitChange(ticketLimit: number): void
-  ticketLimit: number
+  onTicketLimitChange(e: React.SyntheticEvent<EventTarget>): void
 }
 
-const LoadMore: React.FC<loadMoreProps> = ({ onTicketLimitChange, ticketLimit }) => {
+const LoadMore: React.FC<loadMoreProps> = ({ onTicketLimitChange }) => {
  return (
-  <div className={classes.cardListItemLoadmore} onClick={() => onTicketLimitChange(ticketLimit + 1)}>
-    <span> Показать еще 3 билета! </span>
+  <div className={classes.cardListItemLoadmore} onClick={(e) => onTicketLimitChange(e)}>
+    <span> Показать еще 5 билета! </span>
   </div>
  );
 };

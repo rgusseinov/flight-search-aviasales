@@ -5,37 +5,57 @@ import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
+const LOAD_MORE_TICKET_COUNT = 5;
+
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<any>([]);
-  const [ticketLimit, setTicketLimit] = useState<number>(5);
+  const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_TICKET_COUNT);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [sortType, setSortType] = useState<any>([]);
+  const [sortType, setSortType] = useState<any>({
+    'stop0': false,
+    'stop1': false,
+    'stop2': false,
+    'stop3': false
+  });
   const [filterType, setFilterType] = useState<any>([]);
 
   // 1. Filter types // top
-  const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-       
+  const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {       
     setFilterType({
       [e.target.value]: e.target.checked
     });
-
   };
-
 
   // 2. Sort type // Side bar
   const onSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+/*     if (e.target.name === 'stop0' && e.target.checked){
+      setSortType({
+        'stop0': true,
+        'stop1': true,
+        'stop2': true,
+        'stop3': true
+      });      
+
+    } else if (e.target.name === 'stop0' && !e.target.checked){
+      setSortType({
+        'stop0': false,
+        'stop1': false,
+        'stop2': false,
+        'stop3': false
+      });
+    }
+ */
     setSortType({
       ...sortType,
       [e.target.name]: e.target.checked
-    });   
+    });
   };
-
   
   // 3. Lode more button
-  const onTicketLimitChange = (ticketLimit: number) => {
-    setTicketLimit(ticketLimit);
+  const onTicketLimitChange = () => {
+    setTicketLimit(ticketLimit + LOAD_MORE_TICKET_COUNT);
   };
 
 
@@ -51,6 +71,8 @@ const Body: React.FC = () => {
     generateAPIKey();
     getTickets();
 
+    console.log(`sortType`, sortType);
+
   });
 
 
@@ -64,15 +86,13 @@ const Body: React.FC = () => {
         if (!data.stop) {
           setLoading(true);
           await getTickets();
-        } else {
-         
+        } else {         
       
-          const filteredTickets:any  = getFilteredTickets(sortType, filterType, data.tickets);
+          let filteredTickets:any  = getFilteredTickets(sortType, filterType, data.tickets);
+          filteredTickets = filteredTickets.slice(0, ticketLimit);
           setTickets(filteredTickets);
           setLoading(false);
           
-          // console.log(`filteredTickets`, filteredTickets);
-
       }
     } else if (response.status == 404) {
       // await getTickets();
@@ -91,7 +111,6 @@ const Body: React.FC = () => {
     if (sortType.stop2) flightStops.push(2);
     if (sortType.stop3) flightStops.push(3);    
     
-    // console.log(`flightStops`, flightStops);
 
     if (flightStops.length > 0){
       ticketList = tickets.filter((ticket: any) => {
@@ -118,25 +137,18 @@ const Body: React.FC = () => {
     return (a: any, b: any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
   };
 
-  // console.log(`filterType`, filterType);
-
   return (
     <div className={classes.main}>
       <SideBar
-/*         stopTypeAll={stopTypeAll}
-        onStopChangeAll={onStopChangeAll}
-        onSortTypeChange={onSortTypeChange} */
         sortType={sortType}
         onSortTypeChange={onSortTypeChange}
       />
       <Container
         tickets={ticketList}
         loading={loading}
-        ticketLimit={ticketLimit}
         filterType={filterType}
         onFilterTypeChange={onFilterTypeChange}
-        onTicketLimitChange={onTicketLimitChange}
-        
+        onTicketLimitChange={onTicketLimitChange}        
       />
     </div>
  );  

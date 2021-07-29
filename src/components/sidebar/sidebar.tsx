@@ -7,22 +7,21 @@ interface sideBarProps {
   sortType: any
 }
 
-const SideBar: React.FC<sideBarProps> = ({
-  onSortTypeChange, sortType }) => {
-  
+const SideBar: React.FC<sideBarProps> = ({ onSortTypeChange, sortType }) => {
   return (
     <div className={cn(styles.sidebar)}>
       <div className={cn(styles.filterContainer)}>
         <div className={cn(styles.header)}> Количество пересадок </div>
 
         <div className={cn(styles.filterListItems)}>
-          
-
           <div className={cn(styles.filterItem)}>
             <label className={cn(styles.check, styles.option)}>
               <input
                   className={styles.checkInput}
                   type="checkbox"
+                  name="stop0"
+                  checked={(sortType.stop0) ? true : false}
+                  onChange={(e) => onSortTypeChange(e)}
               />
               <span className={styles.checkBox}></span> Все
             </label>
@@ -66,16 +65,7 @@ const SideBar: React.FC<sideBarProps> = ({
               <span className={styles.checkBox}></span> 3 пересадки
             </label>
           </div>
-
-{/*           <div className="filter-item">
-            <label className="check option">
-              <input className="check__input" type="checkbox" />
-              <span className="check__box"></span> 3 пересадки
-            </label>
-          </div> */}
-
         </div>
-
       </div>
   </div>
  );
