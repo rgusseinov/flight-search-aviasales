@@ -1,15 +1,17 @@
 import React from 'react';
+import { ITicket } from '../../interfaces/ticket';
 import LoadMore from '../load-more/load-more';
 import Loader from '../loader/loader';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
 
+
 interface ticketsProps {
   onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
   onTicketLimitChange(e: React.SyntheticEvent<EventTarget>): void
   filterType: any
-  tickets: []
+  tickets: ITicket[]
   loading: boolean
 }
 

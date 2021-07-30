@@ -21,3 +21,5 @@ What to lear:
 2. Where define any ? where no need to define any
 
 */
+
+// Checked all https://codesandbox.io/s/festive-framework-8l2ez?file=/src/App.js:2118-2129

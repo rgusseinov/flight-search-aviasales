@@ -1,57 +1,64 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { initiateAPIKey } from '../../api/api';
+import { ITicket } from '../../interfaces/ticket';
+import { sortByCheap, sortByFast } from '../../utils/utils';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
-const LOAD_MORE_TICKET_COUNT = 5;
+const LOAD_MORE_TICKET_COUNT = 3;
+
+interface IChecked {
+  stop1: boolean
+  stop2: boolean
+  stop3: boolean
+}
+
 
 const Body: React.FC = () => {
 
-  const [ticketList, setTickets] = useState<any>([]);
+  const [ticketList, setTickets] = useState<ITicket[]>([]);
   const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_TICKET_COUNT);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [sortType, setSortType] = useState<any>({
-    'stop0': false,
-    'stop1': false,
-    'stop2': false,
-    'stop3': false
-  });
   const [filterType, setFilterType] = useState<any>([]);
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checked, setChecked] = useState<IChecked>({
+    stop1: false,
+    stop2: false,
+    stop3: false
+  });
 
-  // 1. Filter types // top
+  // 1. Filters / sidebar
+  const toggleCheck = (inputName: string) => {
+    setChecked((prevState: any) => {
+      const newState = { ...prevState };
+      newState[inputName] = !prevState[inputName];
+      return newState;
+    });
+  };
+
+  // Filters all / Side bar
+  const selectAll = (e: any) => {
+    setCheckedAll(e.target.checked);
+    setChecked((prevState: any) => {
+      const newState = { ...prevState };
+      for (const inputName in newState) {
+        newState[inputName] = e.target.checked;
+      }
+      return newState;
+    });
+  };
+
+
+  // 2. Sort // top
   const onFilterTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {       
     setFilterType({
       [e.target.value]: e.target.checked
     });
   };
 
-  // 2. Sort type // Side bar
-  const onSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-/*     if (e.target.name === 'stop0' && e.target.checked){
-      setSortType({
-        'stop0': true,
-        'stop1': true,
-        'stop2': true,
-        'stop3': true
-      });      
-
-    } else if (e.target.name === 'stop0' && !e.target.checked){
-      setSortType({
-        'stop0': false,
-        'stop1': false,
-        'stop2': false,
-        'stop3': false
-      });
-    }
- */
-    setSortType({
-      ...sortType,
-      [e.target.name]: e.target.checked
-    });
-  };
   
   // 3. Lode more button
   const onTicketLimitChange = () => {
@@ -60,6 +67,20 @@ const Body: React.FC = () => {
 
 
   useEffect(() => {
+
+    let allChecked = true;
+    for (const inputName in checked) {
+      if (checked[inputName] === false) {
+        allChecked = false;
+      }
+    }
+    
+    if (allChecked) {
+      setCheckedAll(true);
+    } else {
+      setCheckedAll(false);
+    }
+
     const generateAPIKey = async() => {
       try {
         await initiateAPIKey();
@@ -71,25 +92,23 @@ const Body: React.FC = () => {
     generateAPIKey();
     getTickets();
 
-    console.log(`sortType`, sortType);
-
   });
-
 
   const getTickets = async() => {
     const token = localStorage.getItem('SEARCH_KEY');
     const response = await fetch(`https://front-test.beta.aviasales.ru/tickets?searchId=${token}`);
   
     if (response.ok) {
-        const data = await response.json();        
+        const data = await response.json();   
 
         if (!data.stop) {
           setLoading(true);
           await getTickets();
         } else {         
       
-          let filteredTickets:any  = getFilteredTickets(sortType, filterType, data.tickets);
+          let filteredTickets:any  = getFilteredTickets(checked, filterType, data.tickets);
           filteredTickets = filteredTickets.slice(0, ticketLimit);
+          console.log(filteredTickets);
           setTickets(filteredTickets);
           setLoading(false);
           
@@ -102,16 +121,15 @@ const Body: React.FC = () => {
     }
   };
 
-  const getFilteredTickets = (sortType: any, filterType:any, tickets:[]) => {
+  const getFilteredTickets = (checked: any, filterType:any, tickets:[]) => {
 
     const flightStops:Array<number> = [];
     let ticketList:Array<any> = tickets;
 
-    if (sortType.stop1) flightStops.push(1);
-    if (sortType.stop2) flightStops.push(2);
-    if (sortType.stop3) flightStops.push(3);    
+    if (checked.stop1) flightStops.push(1);
+    if (checked.stop2) flightStops.push(2);
+    if (checked.stop3) flightStops.push(3);
     
-
     if (flightStops.length > 0){
       ticketList = tickets.filter((ticket: any) => {
         if (flightStops.includes(ticket.segments[0].stops.length)){  
@@ -129,19 +147,15 @@ const Body: React.FC = () => {
     return ticketList;
   };
 
-  const sortByCheap = (field: string) => {
-    return (a: any, b: any) => (a[field] > b[field]) ? 1 : -1;
-  };
-
-  const sortByFast = (field: string) => {
-    return (a: any, b: any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
-  };
 
   return (
     <div className={classes.main}>
       <SideBar
-        sortType={sortType}
-        onSortTypeChange={onSortTypeChange}
+        selectAll={selectAll}
+        toggleCheck={toggleCheck}
+        checked={checked}
+        checkedAll={checkedAll}
+
       />
       <Container
         tickets={ticketList}
