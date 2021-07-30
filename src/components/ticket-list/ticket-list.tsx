@@ -1,17 +1,13 @@
 import React from 'react';
+import { ITicket, ticketListProps } from '../../interfaces/ticket';
 import TicketItem from '../ticket-item/ticket-item';
 import styles from './ticket-list.module.css';
-
-interface ticketListProps {
-  tickets: Array<any>
-}
 
 const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
   return (
     <div className={styles.cardList}>
       {
-        tickets && tickets.map((ticket, key) => {
-          
+        tickets && tickets.map((ticket: ITicket, key: number) => {
           return (
             <TicketItem
               key={key}
@@ -21,7 +17,7 @@ const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
             />
           );
         })
-      }      
+      }
     </div>
   );
 };

@@ -1,28 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useState } from 'react';
 import { initiateAPIKey } from '../../api/api';
+import { IChecked } from '../../interfaces/filter';
 import { ITicket } from '../../interfaces/ticket';
-import { sortByCheap, sortByFast } from '../../utils/utils';
+import { LOAD_MORE_COUNT, sortByCheap, sortByFast } from '../../utils/utils';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
-
-const LOAD_MORE_TICKET_COUNT = 3;
-
-interface IChecked {
-  stop1: boolean
-  stop2: boolean
-  stop3: boolean
-}
 
 
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<ITicket[]>([]);
-  const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_TICKET_COUNT);
+  const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_COUNT);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [filterType, setFilterType] = useState<any>([]);
+  const [filterType, setFilterType] = useState<any>([]); // replace any
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState<IChecked>({
     stop1: false,
@@ -32,7 +25,7 @@ const Body: React.FC = () => {
 
   // 1. Filters / sidebar
   const toggleCheck = (inputName: string) => {
-    setChecked((prevState: any) => {
+    setChecked((prevState: IChecked) => {
       const newState = { ...prevState };
       newState[inputName] = !prevState[inputName];
       return newState;
@@ -40,9 +33,9 @@ const Body: React.FC = () => {
   };
 
   // Filters all / Side bar
-  const selectAll = (e: any) => {
+  const selectAll = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckedAll(e.target.checked);
-    setChecked((prevState: any) => {
+    setChecked((prevState: IChecked) => {
       const newState = { ...prevState };
       for (const inputName in newState) {
         newState[inputName] = e.target.checked;
@@ -62,7 +55,7 @@ const Body: React.FC = () => {
   
   // 3. Lode more button
   const onTicketLimitChange = () => {
-    setTicketLimit(ticketLimit + LOAD_MORE_TICKET_COUNT);
+    setTicketLimit(ticketLimit + LOAD_MORE_COUNT);
   };
 
 
@@ -70,11 +63,11 @@ const Body: React.FC = () => {
 
     let allChecked = true;
     for (const inputName in checked) {
-      if (checked[inputName] === false) {
+      if (checked[inputName] === false){
         allChecked = false;
       }
     }
-    
+  
     if (allChecked) {
       setCheckedAll(true);
     } else {
@@ -106,7 +99,7 @@ const Body: React.FC = () => {
           await getTickets();
         } else {         
       
-          let filteredTickets:any  = getFilteredTickets(checked, filterType, data.tickets);
+          let filteredTickets:ITicket[]  = getFilteredTickets(checked, filterType, data.tickets);
           filteredTickets = filteredTickets.slice(0, ticketLimit);
           console.log(filteredTickets);
           setTickets(filteredTickets);
@@ -121,17 +114,17 @@ const Body: React.FC = () => {
     }
   };
 
-  const getFilteredTickets = (checked: any, filterType:any, tickets:[]) => {
+  const getFilteredTickets = (checked: IChecked, filterType:any, tickets:[]) => {
 
     const flightStops:Array<number> = [];
-    let ticketList:Array<any> = tickets;
+    let ticketList:ITicket[] = tickets;
 
     if (checked.stop1) flightStops.push(1);
     if (checked.stop2) flightStops.push(2);
     if (checked.stop3) flightStops.push(3);
     
     if (flightStops.length > 0){
-      ticketList = tickets.filter((ticket: any) => {
+      ticketList = tickets.filter((ticket: ITicket) => {
         if (flightStops.includes(ticket.segments[0].stops.length)){  
           return ticket;
         }
@@ -146,7 +139,6 @@ const Body: React.FC = () => {
   
     return ticketList;
   };
-
 
   return (
     <div className={classes.main}>

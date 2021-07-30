@@ -1,21 +1,18 @@
 import React from 'react';
+import { sortFilterProps } from '../../interfaces/filter';
 import classes from './sort-filter.module.css';
-
-interface sortFilterProps {
-  onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
-  filterType: any 
-}
 
 const SortFilter: React.FC<sortFilterProps> = ({  onFilterTypeChange, filterType }) => {
 
   return (
     <div className={classes.sortFilter}>
-      <input type="radio"
-             id="radioCheap"
-             name="cheap"
-             value="cheap"
-             checked={(filterType.cheap) ? true : false }
-             onChange={(e) => onFilterTypeChange(e)}
+      <input
+        type="radio"
+        id="radioCheap"
+        name="cheap"
+        value="cheap"
+        checked={(filterType.cheap) ? true : false }
+        onChange={(e) => onFilterTypeChange(e)}
       />
       <label htmlFor="radioCheap"> Самый дешевый </label>
 

@@ -28,3 +28,5 @@ export const sortByCheap = (field: any) => {
 export const sortByFast = (field: any) => {
   return (a:any, b:any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
 };
+
+export const LOAD_MORE_COUNT = 5;

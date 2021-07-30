@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './sidebar.module.css';
 import cn from 'classnames';
+import { IChecked } from '../../interfaces/filter';
 
 interface sideBarProps {
   selectAll(e: React.SyntheticEvent<EventTarget>): void
   toggleCheck(type: string): void
-  checked: any,
-  checkedAll: any
+  checked: IChecked,
+  checkedAll: boolean
 }
 
 const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, checkedAll }) => {

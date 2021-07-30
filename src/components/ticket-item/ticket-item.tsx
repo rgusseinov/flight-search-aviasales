@@ -1,40 +1,9 @@
 import React from 'react';
+import { ITicket } from '../../interfaces/ticket';
 import { convertMinuteToHM, getArrivalTime } from '../../utils/utils';
 import classes from './ticket-item.module.css';
 
-interface TicketItemProps {
-  price: number
-  carrier: string,
-  segments: [
-    {
-      // Код города (iata)
-      origin: string
-      // Код города (iata)
-      destination: string
-      // Дата и время вылета туда
-      date: string
-      // Массив кодов (iata) городов с пересадками
-      stops: string[]
-      // Общее время перелёта в минутах
-      duration: number
-    },
-    {
-      // Код города (iata)
-      origin: string
-      // Код города (iata)
-      destination: string
-      // Дата и время вылета обратно
-      date: string
-      // Массив кодов (iata) городов с пересадками
-      stops: string[]
-      // Общее время перелёта в минутах
-      duration: number
-    }
-  ]
-}
-
-
-const TicketItem:React.FC<TicketItemProps> = ({ price, carrier, segments }) => {
+const TicketItem:React.FC<ITicket> = ({ price, carrier, segments }) => {
  return (
   <div className={classes.cardListItem}>
   <div className={classes.cardListItemHeader}>
@@ -44,7 +13,6 @@ const TicketItem:React.FC<TicketItemProps> = ({ price, carrier, segments }) => {
     </span>
   </div>
   <div className={classes.cardListItemContent}>
-
     {
       segments && segments.map((segment, index) => {
         const originCity = segment.origin;
@@ -62,8 +30,7 @@ const TicketItem:React.FC<TicketItemProps> = ({ price, carrier, segments }) => {
           case 3: stopsSentence = `${countStops} пересадки`; break;
           case 0: stopsSentence = `без пересадок`; break;
           default: stopsSentence = `${countStops} пересадок`; break;
-        }
-        
+        }        
 
        return (
           <div key={index} className={classes.contentBlockRow}>

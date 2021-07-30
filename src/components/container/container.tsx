@@ -15,11 +15,11 @@ interface ticketsProps {
   loading: boolean
 }
 
-const Container: React.FC<ticketsProps> = ({ 
+const Container: React.FC<ticketsProps> = ({
   onFilterTypeChange,
   onTicketLimitChange,
   filterType,
-  tickets, 
+  tickets,
   loading,
 }) => {
   return (

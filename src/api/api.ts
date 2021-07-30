@@ -1,5 +1,4 @@
 const INIT_URL = 'https://front-test.beta.aviasales.ru/search';
-// const TICKETS_URL = `https://front-test.beta.aviasales.ru/tickets?searchId=`;
 
 export async function initiateAPIKey(){
   const result = await fetch(INIT_URL);
