@@ -54,6 +54,10 @@
   font-weight: 600;
 }
 
+.textTimeDuration {
+  text-transform: lowercase;
+}
+
 
 .contentBlockSecondary {
   color: #A0B0B9;

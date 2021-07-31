@@ -1,6 +1,6 @@
 import React from 'react';
 import { ITicket } from '../../interfaces/ticket';
-import LoadMore from '../load-more/load-more';
+// import LoadMore from '../load-more/load-more';
 import Loader from '../loader/loader';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
@@ -12,6 +12,8 @@ interface ticketsProps {
   onTicketLimitChange(e: React.SyntheticEvent<EventTarget>): void
   filterType: any
   tickets: ITicket[]
+  totalTickets: any
+  ticketLimit: number
   loading: boolean
 }
 
@@ -20,6 +22,8 @@ const Container: React.FC<ticketsProps> = ({
   onTicketLimitChange,
   filterType,
   tickets,
+  totalTickets,
+  ticketLimit,
   loading,
 }) => {
   return (
@@ -30,8 +34,10 @@ const Container: React.FC<ticketsProps> = ({
       />
       { loading ? (<Loader />) : (
         <div>
-          <TicketList tickets={tickets} />
-          <LoadMore
+          <TicketList
+            tickets={tickets}
+            totalTickets={totalTickets}
+            ticketLimit={ticketLimit}
             onTicketLimitChange={onTicketLimitChange}
           />
         </div>

@@ -7,7 +7,7 @@ export function convertMinuteToHM(minutes: number){
   rhours = (rhours < 10) ? `0${rhours}` : rhours;
   minute = (minute < 10) ? `0${minute}` : minute;
 
-  result = `${rhours}:${minute}`;
+  result = `${rhours}ч : ${minute}м`;
   return result;
 }
 
@@ -29,4 +29,4 @@ export const sortByFast = (field: any) => {
   return (a:any, b:any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
 };
 
-export const LOAD_MORE_COUNT = 5;
+export const LOAD_MORE_COUNT = 2;

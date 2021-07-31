@@ -1,9 +1,10 @@
 import React from 'react';
 import { ITicket, ticketListProps } from '../../interfaces/ticket';
+import LoadMore from '../load-more/load-more';
 import TicketItem from '../ticket-item/ticket-item';
 import styles from './ticket-list.module.css';
 
-const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
+const TicketList: React.FC<ticketListProps> = ({ onTicketLimitChange, tickets, totalTickets, ticketLimit }) => {
   return (
     <div className={styles.cardList}>
       {
@@ -18,8 +19,23 @@ const TicketList: React.FC<ticketListProps> = ({ tickets }) => {
           );
         })
       }
+      { (ticketLimit < totalTickets) ? ( <LoadMore onTicketLimitChange={onTicketLimitChange} /> ) : null }
+      
     </div>
   );
 };
 
 export default TicketList;
+
+/*
+
+  total: 10
+
+  1 ... 5
+
+  if (current opened < total ) then show load more
+
+
+
+
+*/

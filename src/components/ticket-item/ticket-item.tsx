@@ -1,6 +1,7 @@
 import React from 'react';
 import { ITicket } from '../../interfaces/ticket';
 import { convertMinuteToHM, getArrivalTime } from '../../utils/utils';
+import cn from 'classnames';
 import classes from './ticket-item.module.css';
 
 const TicketItem:React.FC<ITicket> = ({ price, carrier, segments }) => {
@@ -41,7 +42,7 @@ const TicketItem:React.FC<ITicket> = ({ price, carrier, segments }) => {
 
             <div className={classes.contentBlock}>
               <span className={classes.contentBlockSecondary}>В пути</span>
-              <span className={classes.contentBlockMain}>{timeDuration}</span>
+              <span className={cn(classes.contentBlockMain, classes.textTimeDuration)} >{timeDuration}</span>
             </div>
 
             <div className={classes.contentBlock}>

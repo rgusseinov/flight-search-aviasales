@@ -30,5 +30,8 @@ export interface ITicket {
 }
 
 export interface ticketListProps {
+  onTicketLimitChange(e: React.SyntheticEvent<EventTarget>): void
   tickets: ITicket[]
+  totalTickets: any
+  ticketLimit: number
 }

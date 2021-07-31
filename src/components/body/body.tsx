@@ -8,10 +8,10 @@ import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
-
 const Body: React.FC = () => {
 
   const [ticketList, setTickets] = useState<ITicket[]>([]);
+  const [totalTickets, setTotalTickets] = useState<number | undefined | null>(null);
   const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_COUNT);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -100,15 +100,15 @@ const Body: React.FC = () => {
         } else {         
       
           let filteredTickets:ITicket[]  = getFilteredTickets(checked, filterType, data.tickets);
-          filteredTickets = filteredTickets.slice(0, ticketLimit);
+          setTotalTickets(filteredTickets.length || 0);
           console.log(filteredTickets);
+
+          filteredTickets = filteredTickets.slice(0, ticketLimit);
           setTickets(filteredTickets);
           setLoading(false);
           
       }
-    } else if (response.status == 404) {
-      // await getTickets();
-    } else {
+    } else if (response.status !== 404) {
       setLoading(true);
       await getTickets();
     }
@@ -151,6 +151,8 @@ const Body: React.FC = () => {
       />
       <Container
         tickets={ticketList}
+        totalTickets={totalTickets}
+        ticketLimit={ticketLimit}
         loading={loading}
         filterType={filterType}
         onFilterTypeChange={onFilterTypeChange}
