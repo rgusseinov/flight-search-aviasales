@@ -10,6 +10,11 @@ interface sideBarProps {
   checkedAll: boolean
 }
 
+/* direct: true,
+oneStop: true,
+twoStop: true,
+threeStop: true */
+
 const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, checkedAll }) => {
   return (
     <div className={cn(styles.sidebar)}>
@@ -25,7 +30,7 @@ const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, chec
                   onChange={(event) => selectAll(event)}
                   checked={checkedAll}
               />
-              <span className={styles.checkBox}></span> Все
+            <span className={styles.checkBox}></span> Все
             </label>
           </div>
 
@@ -34,11 +39,11 @@ const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, chec
               <input
                 className={styles.checkInput} 
                 type="checkbox"
-                name="stop1"
-                onChange={() => toggleCheck("stop1")}
-                checked={checked["stop1"]}
+                name="direct"
+                onChange={() => toggleCheck("direct")}
+                checked={checked["direct"]}
               />
-              <span className={styles.checkBox}></span> 1 пересадка
+            <span className={styles.checkBox}></span> Без пересадок
             </label>
           </div>
 
@@ -47,9 +52,22 @@ const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, chec
               <input
                 className={styles.checkInput} 
                 type="checkbox"
-                name="stop2"
-                onChange={() => toggleCheck("stop2")}
-                checked={checked["stop2"]}
+                name="oneStop"
+                onChange={() => toggleCheck("oneStop")}
+                checked={checked["oneStop"]}
+              />
+            <span className={styles.checkBox}></span> 1 пересадка
+            </label>
+          </div>
+
+          <div className={cn(styles.filterItem)}>
+            <label className={cn(styles.check, styles.option)}>
+              <input
+                className={styles.checkInput} 
+                type="checkbox"
+                name="twoStop"
+                onChange={() => toggleCheck("twoStop")}
+                checked={checked["twoStop"]}
               />
               <span className={styles.checkBox}></span> 2 пересадки
             </label>
@@ -60,11 +78,11 @@ const SideBar: React.FC<sideBarProps> = ({ toggleCheck, selectAll, checked, chec
               <input 
                 className={styles.checkInput} 
                 type="checkbox"
-                name="stop3"
-                onChange={() => toggleCheck("stop3")}
-                checked={checked["stop3"]}
+                name="threeStop"
+                onChange={() => toggleCheck("threeStop")}
+                checked={checked["threeStop"]}
               />
-              <span className={styles.checkBox}></span> 3 пересадки
+            <span className={styles.checkBox}></span> 3 пересадки
             </label>
           </div>
 

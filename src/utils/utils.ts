@@ -1,3 +1,7 @@
+import { ITicket } from "../interfaces/ticket";
+
+export const LOAD_MORE_COUNT = 5;
+
 export function convertMinuteToHM(minutes: number){
   let rhours, minute, result = null;
   const hours = minutes / 60;
@@ -10,7 +14,6 @@ export function convertMinuteToHM(minutes: number){
   result = `${rhours}ч : ${minute}м`;
   return result;
 }
-
 
 export function getArrivalTime(date: any, durationMinutes: number){
   const newDate = new Date(date);
@@ -29,4 +32,11 @@ export const sortByFast = (field: any) => {
   return (a:any, b:any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
 };
 
-export const LOAD_MORE_COUNT = 2;
+export const filterByStops = (tickets:ITicket[], stops: number) => {
+
+  return tickets.filter(ticket => {
+    const [first, second] = ticket.segments;
+    return first.stops.length === stops && second.stops.length === stops;
+  });
+};
+

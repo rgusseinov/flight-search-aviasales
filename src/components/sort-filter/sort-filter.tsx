@@ -11,8 +11,8 @@ const SortFilter: React.FC<sortFilterProps> = ({  onFilterTypeChange, filterType
         id="radioCheap"
         name="cheap"
         value="cheap"
-        checked={(filterType.cheap) ? true : false }
-        onChange={(e) => onFilterTypeChange(e)}
+        checked={filterType === 'cheap'}
+        onChange={onFilterTypeChange}
       />
       <label htmlFor="radioCheap"> Самый дешевый </label>
 
@@ -21,8 +21,8 @@ const SortFilter: React.FC<sortFilterProps> = ({  onFilterTypeChange, filterType
         id="radioQuick"
         name="quick"
         value="quick"
-        checked={(filterType.quick) ? true : false }
-        onChange={(e) => onFilterTypeChange(e)}
+        checked={filterType === 'quick'}
+        onChange={onFilterTypeChange}
       />
       <label htmlFor="radioQuick"> Самый быстрый </label>
 
