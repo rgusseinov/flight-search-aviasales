@@ -1,21 +1,16 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { useMemo } from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { getTickets } from '../../api/api';
 import { IChecked } from '../../interfaces/filter';
 import { ITicket } from '../../interfaces/ticket';
 import { filterByStops } from '../../utils/utils';
-// import { LOAD_MORE_COUNT, sortByCheap, sortByFast } from '../../utils/utils';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
-const Body: React.FC = () => {
-
+const Main: React.FC = () => {
   const [allTickets, setAllTickets] = useState<ITicket[]>([]);
-
   const [loading, setLoading] = useState<boolean>(false);
-
   const [filters, setFilters] = useState<IChecked>({
     direct: false,
     oneStop: false,
@@ -23,18 +18,18 @@ const Body: React.FC = () => {
     threeStop: false
   });
 
-  const allFiltersChecked = filters.direct && filters.oneStop && filters.twoStop && filters.threeStop;
+  // const allFiltersChecked = filters.direct && filters.oneStop && filters.twoStop && filters.threeStop;
 
-  // 1. sidebar
-  const handleFilterChange = (inputName: string) => {
+  // 1. Sidebar
+  const handleFilterChange = (filterName: string) => {
     setFilters((prevState: IChecked) => {
       const newState = { ...prevState };
-      newState[inputName] = !prevState[inputName];
+      newState[filterName] = !prevState[filterName];
       return newState;
     });
   };
 
-  // Filters all / Side bar
+  // 2. Top filters
   const handleAllFiltersChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked){
@@ -57,6 +52,9 @@ const Body: React.FC = () => {
   // Use memo
   const showedTickets = useMemo(() => {
     const result:ITicket[] = [];
+
+    // 1. Sidebar filters
+
     if (filters.direct){
       result.push(...filterByStops(allTickets, 0));
     }
@@ -72,11 +70,17 @@ const Body: React.FC = () => {
     if (filters.threeStop){
       result.push(...filterByStops(allTickets, 3));
     }
+
+    // 2. Sort by (cheap, quick)
+
+    
+
     return result;
   }, [allTickets, filters]);
 
 
   useEffect(() => {
+    
     const loadTickets = async() => {
       setLoading(true);
       try {
@@ -93,13 +97,15 @@ const Body: React.FC = () => {
     
   }, []);
 
+  // console.log(`showedTickets`, showedTickets);
+
   return (
     <div className={classes.main}>
       <SideBar
-        selectAll={handleAllFiltersChange}
-        toggleCheck={handleFilterChange}
-        checked={filters}
-        checkedAll={allFiltersChecked} // Не нужен. Потом убрать. Вычислять внутри сайдбара
+        onAllFilterChange={handleAllFiltersChange}
+        onFilterChange={handleFilterChange}
+        filters={filters}
+        // checkedAll={allFiltersChecked} // Не нужен. Потом убрать. Вычислять внутри сайдбара
       />
       <Container
         tickets={showedTickets}
@@ -109,4 +115,4 @@ const Body: React.FC = () => {
  );  
 };
 
-export default Body;
+export default Main;

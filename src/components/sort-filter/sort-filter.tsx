@@ -1,8 +1,12 @@
 import React from 'react';
-import { sortFilterProps } from '../../interfaces/filter';
 import classes from './sort-filter.module.css';
 
-const SortFilter: React.FC<sortFilterProps> = ({  onFilterTypeChange, filterType }) => {
+interface Props {
+  onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
+  filterType: string | undefined 
+}
+
+const SortFilter: React.FC<Props> = ({  onFilterTypeChange, filterType }) => {
 
   return (
     <div className={classes.sortFilter}>

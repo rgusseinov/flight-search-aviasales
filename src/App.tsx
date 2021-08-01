@@ -1,16 +1,17 @@
 import React from 'react';
 import './app.module.css';
-import Body from './components/body/body';
+import Main from './components/body/main';
 import Header from './components/header/header';
 
 const App: React.FC = () => (
     <div>
       <Header />
-      <Body />
-    </div>    
+      <Main />
+    </div>
 );
 
 export default App;
+
 
 /*
 
@@ -30,3 +31,11 @@ Problems:
 */
 
 // Checked all https://codesandbox.io/s/festive-framework-8l2ez?file=/src/App.js:2118-2129
+
+// 4% + 500 tg
+// 1500 rub = 560 tg
+// 5547 5960 0656 7131
+
+// 2500 tg
+// 2 usd
+

@@ -10,10 +10,9 @@ interface Props {
 }
 
 const TicketList: React.FC<Props> = ({ tickets }) => {
-
   const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_COUNT);
 
-  // 3. Lode more button
+  // Lode more button
   const handleTicketLimitChange = () => {
     setTicketLimit(ticketLimit + LOAD_MORE_COUNT);
   };
@@ -39,16 +38,3 @@ const TicketList: React.FC<Props> = ({ tickets }) => {
 };
 
 export default TicketList;
-
-/*
-
-  total: 10
-
-  1 ... 5
-
-  if (current opened < total ) then show load more
-
-
-
-
-*/

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { ITicket } from '../../interfaces/ticket';
 import Loader from '../loader/loader';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
-
 
 interface Props {
   tickets: ITicket[];
@@ -13,22 +13,18 @@ interface Props {
 
 const Container: React.FC<Props> = ({ tickets, loading }) => {
 
-  const [sortType, setSortType] = useState<string | undefined>();
-
-  // 2. Sort // top
-  const handleSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {       
-    setSortType(e.target.value);
+  const [filterType, setFilterType] = useState<string | undefined>();
+  const handleSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
+    setFilterType(e.target.value);
   };
-
-  console.log(`tickets`, tickets);
-
+  
   return (
     <div className={classes.content}>
       <SortFilter
         onFilterTypeChange={handleSortTypeChange}
-        filterType={sortType}
+        filterType={filterType}
       />
-      { loading ? (<Loader />) : ( <TicketList tickets={tickets} /> ) }
+      { loading ? (<Loader />) : <TicketList tickets={tickets} /> }
     </div>
   );
 };

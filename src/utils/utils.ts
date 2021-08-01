@@ -33,7 +33,6 @@ export const sortByFast = (field: any) => {
 };
 
 export const filterByStops = (tickets:ITicket[], stops: number) => {
-
   return tickets.filter(ticket => {
     const [first, second] = ticket.segments;
     return first.stops.length === stops && second.stops.length === stops;
