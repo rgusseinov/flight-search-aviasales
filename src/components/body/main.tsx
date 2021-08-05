@@ -11,12 +11,16 @@ import classes from './body.module.css';
 const Main: React.FC = () => {
   const [allTickets, setAllTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  // 1. Side bar
   const [filters, setFilters] = useState<IChecked>({
     direct: false,
     oneStop: false,
     twoStop: false,
     threeStop: false
   });
+  // 2. Top menu
+  const [filterType, setFilterType] = useState<string | undefined>();
+
 
   // const allFiltersChecked = filters.direct && filters.oneStop && filters.twoStop && filters.threeStop;
 
@@ -29,7 +33,6 @@ const Main: React.FC = () => {
     });
   };
 
-  // 2. Top filters
   const handleAllFiltersChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked){
@@ -47,6 +50,11 @@ const Main: React.FC = () => {
         threeStop: false
       });  
     }
+  };
+
+  const handleFilterTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // console.log(`type`, e.target.value);
+    setFilterType(e.target.value);
   };
 
   // Use memo
@@ -72,11 +80,12 @@ const Main: React.FC = () => {
     }
 
     // 2. Sort by (cheap, quick)
-
-    
-
+/*     if (filterType == 'cheap'){
+      console.log(result.filter(ticket => ticket.price <= 15000));
+    }
+ */
     return result;
-  }, [allTickets, filters]);
+  }, [allTickets, filters, filterType]);
 
 
   useEffect(() => {
@@ -108,6 +117,8 @@ const Main: React.FC = () => {
         // checkedAll={allFiltersChecked} // Не нужен. Потом убрать. Вычислять внутри сайдбара
       />
       <Container
+        onFilterTypeChange={handleFilterTypeChange}
+        filterType={filterType}
         tickets={showedTickets}
         loading={loading}
       />

@@ -17,6 +17,9 @@ const TicketList: React.FC<Props> = ({ tickets }) => {
     setTicketLimit(ticketLimit + LOAD_MORE_COUNT);
   };
 
+  // const newList = tickets.filter(ticket => ticket.price <= 15000);
+  // console.log(newList);
+
   return (
     <div className={styles.cardList}>
       {
