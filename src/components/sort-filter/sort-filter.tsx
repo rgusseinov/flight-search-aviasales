@@ -30,7 +30,12 @@ const SortFilter: React.FC<Props> = ({  onFilterTypeChange, filterType }) => {
       />
       <label htmlFor="radioQuick"> Самый быстрый </label>
 
-      <input type="radio" id="radioOptimal" name="optimal" value="optimal" />
+      <input 
+        type="radio"
+        id="radioOptimal"
+        name="optimal"
+        value="optimal"
+      />
       <label htmlFor="radioOptimal"> Оптимальный </label>
     </div>
   );

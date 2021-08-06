@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { getTickets } from '../../api/api';
 import { IChecked } from '../../interfaces/filter';
 import { ITicket } from '../../interfaces/ticket';
-import { filterByStops } from '../../utils/utils';
+import { filterByStops, sortByCheap, sortByFast } from '../../utils/utils';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
@@ -20,7 +20,6 @@ const Main: React.FC = () => {
   });
   // 2. Top menu
   const [filterType, setFilterType] = useState<string | undefined>();
-
 
   // const allFiltersChecked = filters.direct && filters.oneStop && filters.twoStop && filters.threeStop;
 
@@ -53,13 +52,12 @@ const Main: React.FC = () => {
   };
 
   const handleFilterTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(`type`, e.target.value);
     setFilterType(e.target.value);
   };
 
   // Use memo
   const showedTickets = useMemo(() => {
-    const result:ITicket[] = [];
+    let result:ITicket[] = [];
 
     // 1. Sidebar filters
 
@@ -79,14 +77,16 @@ const Main: React.FC = () => {
       result.push(...filterByStops(allTickets, 3));
     }
 
-    // 2. Sort by (cheap, quick)
-/*     if (filterType == 'cheap'){
-      console.log(result.filter(ticket => ticket.price <= 15000));
+    if (result.length && filterType == 'cheap'){
+      result = result.slice().sort(sortByCheap('price'));
+    } else if (result.length && filterType == 'quick'){
+      result = result.slice().sort(sortByFast('duration'));
     }
- */
+
     return result;
   }, [allTickets, filters, filterType]);
 
+  
 
   useEffect(() => {
     
@@ -106,7 +106,6 @@ const Main: React.FC = () => {
     
   }, []);
 
-  // console.log(`showedTickets`, showedTickets);
 
   return (
     <div className={classes.main}>
