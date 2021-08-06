@@ -1,10 +1,11 @@
 import React from 'react';
+import { loadMoreProps } from '../../interfaces/load';
 import classes from './load-more.module.css';
 
-const LoadMore = () => {
+const LoadMore: React.FC<loadMoreProps> = ({ onTicketLimitChange }) => {
  return (
-  <div className={classes.cardListItemLoadmore}>
-    <span> Показать еще 5 билетов! </span>
+  <div className={classes.cardListItemLoadmore} onClick={(e) => onTicketLimitChange(e)}>
+    <span> Показать еще 5 билета! </span>
   </div>
  );
 };
