@@ -1,6 +1,6 @@
 import { ITicket } from "../interfaces/ticket";
 
-export const LOAD_MORE_COUNT = 5;
+export const LOAD_MORE_COUNT = 10;
 
 export function convertMinuteToHM(minutes: number){
   let rhours, minute, result = null;

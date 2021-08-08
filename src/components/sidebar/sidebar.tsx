@@ -4,12 +4,13 @@ import cn from 'classnames';
 import { IChecked } from '../../interfaces/filter';
 
 interface Props {
-  onAllFilterChange(e: React.SyntheticEvent<EventTarget>): void
   onFilterChange(type: string): void
+  onAllFilterChange(e: React.SyntheticEvent<EventTarget>): void
   filters: IChecked
 }
 
 const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }) => {
+
   return (
     <div className={cn(styles.sidebar)}>
       <div className={cn(styles.filterContainer)}>

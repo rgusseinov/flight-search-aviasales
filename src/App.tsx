@@ -1,7 +1,7 @@
 import React from 'react';
 import './app.module.css';
-import Main from './components/body/main';
 import Header from './components/header/header';
+import Main from './components/main/main';
 
 const App: React.FC = () => (
     <div>

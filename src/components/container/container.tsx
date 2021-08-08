@@ -1,34 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { ITicket } from '../../interfaces/ticket';
-import Loader from '../loader/loader';
+import { setSortBy } from '../../redux/actions/filters';
+// import Loader from '../loader/loader';
 import SortFilter from '../sort-filter/sort-filter';
 import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
 
 interface Props {
   tickets: ITicket[];
-  loading: boolean;
-  filterType: string | undefined;
-  onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
+/*   loading: boolean;*/
+  // filterType: string | undefined;
+  onFilterTypeChange(type: any): void
 }
 
-const Container: React.FC<Props> = ({ onFilterTypeChange, filterType, tickets, loading }) => {
+const Container: React.FC<Props> = ({ tickets, onFilterTypeChange }) => {
 
-  // const [filterType, setFilterType] = useState<string | undefined>();
-/*   const handleSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
-    setFilterType(e.target.value);
+/*   const dispatch = useDispatch();
+  const handleSortTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   }; */
   
   return (
     <div className={classes.content}>
       <SortFilter
         onFilterTypeChange={onFilterTypeChange}
-        filterType={filterType}
+        // filterType={filterType}
       />
-      { loading ? (<Loader />) 
-      : <TicketList
-          tickets={tickets}
-        /> }
+      <TicketList tickets={tickets} />
     </div>
   );
 };

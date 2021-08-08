@@ -1,34 +1,45 @@
 import React from 'react';
+// import { useDispatch } from 'react-redux';
+// import { setSortBy } from '../../redux/actions/filters';
+// import { useTypedSelector } from '../../redux/useTypesSelector';
 import classes from './sort-filter.module.css';
 
 interface Props {
   onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
-  filterType: string | undefined 
+  // filterType: string | undefined 
 }
 
-const SortFilter: React.FC<Props> = ({  onFilterTypeChange, filterType }) => {
+const SortFilter: React.FC<Props> = ({  onFilterTypeChange }) => {
+
+  // const dispatch = useDispatch();
+  // const sortBy = useTypedSelector(state => state.filters);
+
+  const handleFilterChange = (type: any) => {
+    onFilterTypeChange(type);
+  };
+
 
   return (
     <div className={classes.sortFilter}>
       <input
         type="radio"
-        id="radioCheap"
-        name="cheap"
-        value="cheap"
-        checked={filterType === 'cheap'}
-        onChange={onFilterTypeChange}
+        id="radioDesc"
+        name="desc"
+        value="desc"
+        // checked={filterType === 'desc'}
+        onChange={() => handleFilterChange({type: 'price', order: 'desc'})}
       />
-      <label htmlFor="radioCheap"> Самый дешевый </label>
+      <label htmlFor="radioDesc"> Самый дешевый </label>
 
       <input
         type="radio"
-        id="radioQuick"
-        name="quick"
-        value="quick"
-        checked={filterType === 'quick'}
-        onChange={onFilterTypeChange}
+        id="radioAsc"
+        name="asc"
+        value="asc"
+        // checked={filterType === 'asc'}
+        onChange={() => handleFilterChange({type: 'duration', order: 'desc'})}
       />
-      <label htmlFor="radioQuick"> Самый быстрый </label>
+      <label htmlFor="radioAsc"> Самый быстрый </label>
 
       <input 
         type="radio"
