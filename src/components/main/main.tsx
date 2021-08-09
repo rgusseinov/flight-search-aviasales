@@ -5,16 +5,11 @@ import { ITicket } from '../../interfaces/ticket';
 import { setFilterAll, setFilterBy, setSortBy } from '../../redux/actions/filters';
 import { setTickets } from '../../redux/actions/tickets';
 import { useTypedSelector } from '../../redux/useTypesSelector';
-import { filterByStops, sortByCheap, sortByFast } from '../../utils/utils';
+import { filterByStops } from '../../utils/utils';
 import Container from '../container/container';
 import SideBar from '../sidebar/sidebar';
 import classes from './body.module.css';
 
-/* const sortItems = [
-  {name: 'цене', type: 'price', order: 'desc'},
-  {name: 'цене', type: 'duration', order: 'desc'},
-];
- */
 
 const Main: React.FC = () => {
 
@@ -22,13 +17,13 @@ const Main: React.FC = () => {
   const allTickets = useTypedSelector(({ tickets }) => tickets.items);
   const { sortBy, filterBy } = useTypedSelector(({ filters }) => filters);
   
-  useEffect(() => {
+/*   useEffect(() => {
     const loadTickets = async() => {
+      
       try {
         const tickets = await getTickets();
-
-        const fTicket = filterTickets(tickets, sortBy, filterBy);
-        dispatch(setTickets(fTicket));
+        // const fTicket = filterTickets(tickets, sortBy, filterBy);
+        dispatch(setTickets(tickets.slice(0, 3)));
       } catch (err){
         console.log(err);
       }
@@ -36,10 +31,10 @@ const Main: React.FC = () => {
 
     loadTickets();
     
-  }, [sortBy, filterBy]);
+  }, [sortBy]); */
 
 
-  const filterTickets = (tickets: ITicket[], sortBy: any, filterBy: any) => {
+/*   const filterTickets = (tickets: ITicket[], sortBy: any, filterBy: any) => {
     const result = [];    
 
     if (filterBy.direct){
@@ -58,16 +53,8 @@ const Main: React.FC = () => {
       result.push(...filterByStops(tickets, 3));
     }
 
-
-/*     if (sortBy.type == 'price'){
-      result = result.slice().sort(sortByCheap('price'));
-    } else if (sortBy.type == 'duration'){
-      result = result.slice().sort(sortByFast('duration'));
-    }
-     */
-
     return result;
-  };
+  }; */
   
   // top sort
   const onSelectSortType = React.useCallback((type) => {
@@ -76,21 +63,18 @@ const Main: React.FC = () => {
 
  
   // Left filter
-
-  const handleFilterChange = (filter: string) => {
-    console.log(`filterBy`, filterBy);
+  const handleFilterChange = (filter: string) => { 
     dispatch(setFilterBy(filter));
   };
 
 
   const handleAllFiltersChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
-    // console.log(`checked`, checked);
     dispatch(setFilterAll(checked));
   };
   
 
-  // console.log(`filterBy = `, filterBy);
+  console.log(`filterBy`, filterBy);
 
   return (
     <div className={classes.main}>

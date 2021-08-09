@@ -19,17 +19,25 @@ const filters = (state = initialState, action) => {
         };
     }
 
+/*     const handleFilterChange = (filterName: string) => {
+        setFilters((prevState: IChecked) => {
+          const newState = { ...prevState };
+          newState[filterName] = !prevState[filterName];
+          return newState;
+        });
+      }; */
+
+
     if (action.type === 'SET_FILTER_BY'){
 
-        const newState = { ...state['filterBy'] };
+        const newState = state['filterBy'];
         const prevState = state['filterBy'];
         newState[action.payload] = !prevState[action.payload];
         
-
         return {
-            ...state['filterBy'],
             filterBy: newState
-        }; 
+        };
+
     }
 
     if (action.type === 'SET_FILTER_ALL'){
@@ -53,25 +61,6 @@ const filters = (state = initialState, action) => {
                 }
             };
         }
-
-
-
-/*         const checked = e.target.checked;
-        if (checked){
-          setFilters({
-            direct: true,
-            oneStop: true,
-            twoStop: true,
-            threeStop: true
-          });
-        } else {
-          setFilters({
-            direct: false,
-            oneStop: false,
-            twoStop: false,
-            threeStop: false
-          });  
-        } */
 
 
     }
