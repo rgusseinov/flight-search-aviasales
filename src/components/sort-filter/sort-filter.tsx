@@ -1,45 +1,43 @@
-import React from 'react';
-// import { useDispatch } from 'react-redux';
-// import { setSortBy } from '../../redux/actions/filters';
-// import { useTypedSelector } from '../../redux/useTypesSelector';
+import React, { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSortBy } from '../../features/filters/actions';
+import { useTypedSelector } from '../../store';
 import classes from './sort-filter.module.css';
 
-interface Props {
-  onFilterTypeChange(e: React.SyntheticEvent<EventTarget>): void
-  // filterType: string | undefined 
-}
+const SortFilter: React.FC = () => {
 
-const SortFilter: React.FC<Props> = ({  onFilterTypeChange }) => {
+  const dispatch = useDispatch();
+  const { sortBy } = useTypedSelector(({ filters }) => filters);
 
-  // const dispatch = useDispatch();
-  // const sortBy = useTypedSelector(state => state.filters);
-
-  const handleFilterChange = (type: any) => {
-    onFilterTypeChange(type);
+  // top sort
+  const onFilterTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const sortType = e.target.value;
+    dispatch(setSortBy(sortType));
   };
 
+  // console.log(`sortBy`, sortBy);
 
   return (
     <div className={classes.sortFilter}>
+      <label> 
       <input
         type="radio"
-        id="radioDesc"
-        name="desc"
-        value="desc"
-        // checked={filterType === 'desc'}
-        onChange={() => handleFilterChange({type: 'price', order: 'desc'})}
+        name="sortBy"
+        value="price"
+        checked={sortBy === 'price' ? true : false}
+        onChange={onFilterTypeChange}
       />
-      <label htmlFor="radioDesc"> Самый дешевый </label>
+      Самый дешевый </label>
 
+      <label>
       <input
         type="radio"
-        id="radioAsc"
-        name="asc"
-        value="asc"
-        // checked={filterType === 'asc'}
-        onChange={() => handleFilterChange({type: 'duration', order: 'desc'})}
+        name="sortBy"
+        value="duration"
+        checked={sortBy === 'duration' ? true : false}
+        onChange={onFilterTypeChange}
       />
-      <label htmlFor="radioAsc"> Самый быстрый </label>
+      Самый быстрый </label>
 
       <input 
         type="radio"

@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './sidebar.module.css';
 import cn from 'classnames';
-import { IChecked } from '../../interfaces/filter';
+import { useDispatch } from 'react-redux';
+import { setFilterAll, setFilterBy } from '../../features/filters/actions';
+import { useTypedSelector } from '../../store';
 
-interface Props {
-  onFilterChange(type: string): void
-  onAllFilterChange(e: React.SyntheticEvent<EventTarget>): void
-  filters: IChecked
-}
 
-const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }) => {
+  const SideBar: React.FC = () => {
+    const { filterBy } = useTypedSelector(({ filters }) => filters);
+    
+    // const allFiltersChecked = filterBy.direct && filterBy.oneStop && filterBy.twoStop && filterBy.threeStop;
+    const allFiltersChecked = false;
+
+    const dispatch = useDispatch();
+    const onFilterChange = (filter: string) => { 
+      dispatch(setFilterBy(filter));
+    };
+    const onAllFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const checked = e.target.checked;
+      dispatch(setFilterAll(checked));
+    };
 
   return (
     <div className={cn(styles.sidebar)}>
@@ -22,6 +32,7 @@ const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }
               <input
                 className={styles.checkInput}
                 type="checkbox"
+                checked={allFiltersChecked}
                 onChange={(event) => onAllFilterChange(event)}
               />
             <span className={styles.checkBox}></span> Все
@@ -35,7 +46,7 @@ const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }
                 type="checkbox"
                 name="direct"
                 onChange={() => onFilterChange("direct")}
-                checked={filters["direct"]}
+                checked={filterBy["direct"]}
               />
             <span className={styles.checkBox}></span> Без пересадок
             </label>
@@ -48,7 +59,7 @@ const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }
                 type="checkbox"
                 name="oneStop"
                 onChange={() => onFilterChange("oneStop")}
-                checked={filters["oneStop"]}
+                checked={filterBy["oneStop"]}
               />
             <span className={styles.checkBox}></span> 1 пересадка
             </label>
@@ -61,7 +72,7 @@ const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }
                 type="checkbox"
                 name="twoStop"
                 onChange={() => onFilterChange("twoStop")}
-                checked={filters["twoStop"]}
+                checked={filterBy["twoStop"]}
               />
               <span className={styles.checkBox}></span> 2 пересадки
             </label>
@@ -74,7 +85,7 @@ const SideBar: React.FC<Props> = ({ onFilterChange, onAllFilterChange, filters }
                 type="checkbox"
                 name="threeStop"
                 onChange={() => onFilterChange("threeStop")}
-                checked={filters["threeStop"]}
+                checked={filterBy["threeStop"]}
               />
             <span className={styles.checkBox}></span> 3 пересадки
             </label>
