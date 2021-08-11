@@ -13,15 +13,3 @@ export const loadTickets = () => async dispatch => {
   });
   
 };
-
-/* const loadTickets = async() => {
-  try {
-    const tickets = await getTickets();
-    const filterTickets = getFilterTickets(tickets, sortBy, filterBy);
-    dispatch(setTickets(filterTickets));
-  } catch (err){
-    console.log(err);
-  }
-};
-
-loadTickets(); */

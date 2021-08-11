@@ -39,3 +39,18 @@ export const filterByStops = (tickets:ITicket[], stops: number) => {
   });
 };
 
+export const getStopsSentense = (countStops: number) => {
+  let stopsSentence: string;
+  if (countStops === 0) stopsSentence = `без пересадок`;
+  else if (countStops === 1) stopsSentence = `${countStops} пересадка`;
+  else if (countStops === 2) stopsSentence = `${countStops} пересадки`;
+  else if (countStops === 3) stopsSentence = `${countStops} пересадки`;
+  else stopsSentence = `${countStops} пересадок`;
+  
+  return stopsSentence;
+};
+
+export const getCarrierLogo = (carrier: string) => {
+  return `https://pics.avs.io/99/36/${carrier}.png`;
+};
+

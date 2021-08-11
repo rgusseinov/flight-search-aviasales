@@ -1,12 +1,12 @@
 import React from 'react';
-import SortFilter from '../sort-filter/sort-filter';
+import Sort from '../sort/sort';
 import TicketList from '../ticket-list/ticket-list';
 import classes from './container.module.css';
 
 const Container: React.FC = () => {
   return (
     <div className={classes.content}>
-      <SortFilter />
+      <Sort />
       <TicketList />
     </div>
   );

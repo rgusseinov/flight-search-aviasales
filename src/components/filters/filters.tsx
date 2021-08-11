@@ -1,25 +1,25 @@
 import React, { ChangeEvent } from 'react';
-import styles from './sidebar.module.css';
+import styles from './filters.module.css';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { setFilterAll, setFilterBy } from '../../features/filters/actions';
 import { useTypedSelector } from '../../store';
 
+const Filters: React.FC = () => {
+  const { filterBy } = useTypedSelector(({ filters }) => filters);
+  const { direct, oneStop, twoStop, threeStop} = filterBy;
+  
+  const allFiltersChecked = direct && oneStop && twoStop && threeStop;  
 
-  const SideBar: React.FC = () => {
-    const { filterBy } = useTypedSelector(({ filters }) => filters);
-    
-    // const allFiltersChecked = filterBy.direct && filterBy.oneStop && filterBy.twoStop && filterBy.threeStop;
-    const allFiltersChecked = false;
-
-    const dispatch = useDispatch();
-    const onFilterChange = (filter: string) => { 
-      dispatch(setFilterBy(filter));
-    };
-    const onAllFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const checked = e.target.checked;
-      dispatch(setFilterAll(checked));
-    };
+  const dispatch = useDispatch();
+  const onFilterChange = (filter: string) => { 
+    dispatch(setFilterBy(filter));
+  };
+  
+  const onAllFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    dispatch(setFilterAll(checked));
+  };
 
   return (
     <div className={cn(styles.sidebar)}>
@@ -97,4 +97,4 @@ import { useTypedSelector } from '../../store';
  );
 };
 
-export default SideBar;
+export default Filters;

@@ -28,6 +28,7 @@ What to lear:
 1. Typescript syntetics event
 2. Types, how to mention array of objects
 2. Where define any ? where no need to define any
+4. useTypedSelector
 
 Problems:
 

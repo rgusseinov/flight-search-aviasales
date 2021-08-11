@@ -1,13 +1,13 @@
 import React from 'react';
 import Container from '../container/container';
-import SideBar from '../sidebar/sidebar';
+import Filters from '../filters/filters';
 import classes from './body.module.css';
 
 const Main: React.FC = () => {
 
   return (
     <div className={classes.main}>
-      <SideBar />
+      <Filters />
       <Container />
     </div>
  );  

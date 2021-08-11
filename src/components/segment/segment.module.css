@@ -1,0 +1,51 @@
+.contentBlockMain {
+  color: #4A4A4A;
+  font-size: 14px;
+}
+
+.contentBlockSecondary {
+  color: #A0B0B9;
+  font-size: 12px;
+}
+
+.contentBlockRow {
+  display: flex;
+  flex-wrap: wrap;
+  width: 462px;
+  justify-content:space-between;
+}
+
+.cardListItemLoadmore {
+  display: flex;
+  background-color: #2196F3;
+  width: 502px;
+  height: 50px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px 0px #0000001A;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardListItemLoadmore span {
+  color: #fff;
+}
+
+.cardListItemLoadmore:hover {
+    background-color: #1687e4;
+}
+
+.contentBlock span {
+  display: block;
+}
+
+.contentBlock {
+  width: 131px;
+  height: 49px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.textTimeDuration {
+  text-transform: lowercase;
+}
+
