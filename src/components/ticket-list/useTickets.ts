@@ -5,9 +5,10 @@ import { filterByStops, sortByCheap, sortByFast } from "../../utils/utils";
 
 export default () => {
   const { items } = useTypedSelector(({ tickets }) => tickets);
-  const { filterBy, sortBy } = useTypedSelector(({ filters }) => filters);
+  const filterBy = useTypedSelector(({ filters }) => filters);
+  const {sortType} = useTypedSelector(({ sort }) => sort);
 
-  const getFilterTickets = (tickets: ITicket[], sortBy: any, filterBy: any) => {
+  const getFilterTickets = (tickets: ITicket[], sortType: string, filterBy: any) => {
     let result = [];    
 
     if (filterBy.direct){
@@ -26,9 +27,9 @@ export default () => {
       result.push(...filterByStops(tickets, 3));
     }
 
-    if (sortBy && sortBy == 'price'){
+    if (sortType && sortType == 'price'){
       result = result.slice().sort(sortByCheap('price'));
-    } else if (sortBy && sortBy == 'duration'){
+    } else if (sortType && sortType == 'duration'){
       result = result.slice().sort(sortByFast('duration'));
     }
 
@@ -36,8 +37,8 @@ export default () => {
   }; 
 
   const tickets = useMemo(() => {
-    return getFilterTickets(items, sortBy, filterBy);
-  }, [items, sortBy, filterBy]);
+    return getFilterTickets(items, sortType, filterBy);
+  }, [items, sortType, filterBy]);
 
   return tickets;
 

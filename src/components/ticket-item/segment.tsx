@@ -7,8 +7,8 @@ interface segmentProps {
   items: {
     origin: string
     destination: string
-    date: any
-    stops: any
+    date: string
+    stops: Array<string>
     duration: number
   }
 }
@@ -16,10 +16,9 @@ interface segmentProps {
 const Segment:React.FC<segmentProps> = ({ items }) => {
 
     const { origin, destination, date, stops, duration  } = items;
-    const durationInMinutes: any = getArrivalTime(date, duration);
+    const durationInMinutes: string = getArrivalTime(date, duration);
     const timeDuration = convertMinuteToHM(duration);
     const stopsSentence = getStopsSentense(stops.length);
-
  
    return (
       <div className={classes.contentBlockRow}>
@@ -36,8 +35,7 @@ const Segment:React.FC<segmentProps> = ({ items }) => {
         <div className={classes.contentBlock}>
           <span className={classes.contentBlockSecondary}>{stopsSentence}</span>
           <span className={classes.contentBlockMain}>{stops.join(',')} </span>
-        </div> 
-        
+        </div>        
       </div>
     );
 };

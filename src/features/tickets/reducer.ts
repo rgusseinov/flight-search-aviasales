@@ -1,11 +1,16 @@
-import { LOAD_TICKETS_START, LOAD_TICKETS_SUCCESS } from "./actionTypes";
+import { LOAD_TICKETS_START, LOAD_TICKETS_SUCCESS, TicketsDispatchTypes } from "./actionTypes";
 
-const initialState = {
+interface IDefaultState {
+  items: [],
+  isLoaded: boolean
+}
+
+const initialState: IDefaultState = {
   items: [],
   isLoaded: false
 };
 
-const tickets = (state = initialState, action) => {
+const tickets = (state: IDefaultState = initialState, action: TicketsDispatchTypes): IDefaultState => {
 
   switch (action.type){
       case LOAD_TICKETS_START:

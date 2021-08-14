@@ -1,52 +1,45 @@
+import { SET_FILTER_ALL, SET_FILTER_BY } from "./actionTypes";
+
 const initialState = {
-  sortBy: null,
-  filterBy: {
+//   filterBy: {
       direct: false,
       oneStop: false,
       twoStop: false,
       threeStop: false
-  }
+//   }
 };
 
-const filters = (state = initialState, action) => {
-  // TOP sort
-  if (action.type === 'SET_SORT_BY'){
-      return {
-          ...state,
-          sortBy: action.payload
-      };
-  }
+const filters = (state:any = initialState, action: any) => {
 
-  // Left sidebar
-  if (action.type === 'SET_FILTER_BY'){
+  if (action.type === SET_FILTER_BY){
       
-      const newState = {...state['filterBy']};
-      const prevState = state['filterBy'];
+      const newState = {...state};
+      const prevState = state;
       newState[action.payload] = !prevState[action.payload];
       
       return {
-          filterBy: newState
+          ...newState
       };
   }
 
-  if (action.type === 'SET_FILTER_ALL'){
+  if (action.type === SET_FILTER_ALL){
       if (action.payload){
           return {
-              filterBy: {
+            //   filterBy: {
                   direct: true,
                   oneStop: true,
                   twoStop: true,
                   threeStop: true
-              }
+            //   }
           };
       } else {
           return {
-              filterBy: {
+            //   filterBy: {
                   direct: false,
                   oneStop: false,
                   twoStop: false,
                   threeStop: false
-              }
+            //   }
           };
       }
   }

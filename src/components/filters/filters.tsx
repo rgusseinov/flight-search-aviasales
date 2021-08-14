@@ -6,9 +6,8 @@ import { setFilterAll, setFilterBy } from '../../features/filters/actions';
 import { useTypedSelector } from '../../store';
 
 const Filters: React.FC = () => {
-  const { filterBy } = useTypedSelector(({ filters }) => filters);
-  const { direct, oneStop, twoStop, threeStop} = filterBy;
-  
+  const filterType = useTypedSelector(({ filters }) => filters);
+  const { direct, oneStop, twoStop, threeStop} = filterType;  
   const allFiltersChecked = direct && oneStop && twoStop && threeStop;  
 
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const Filters: React.FC = () => {
   };
   
   const onAllFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
+    const checked: boolean = e.target.checked;
     dispatch(setFilterAll(checked));
   };
 
@@ -46,7 +45,7 @@ const Filters: React.FC = () => {
                 type="checkbox"
                 name="direct"
                 onChange={() => onFilterChange("direct")}
-                checked={filterBy["direct"]}
+                checked={filterType["direct"]}
               />
             <span className={styles.checkBox}></span> Без пересадок
             </label>
@@ -59,7 +58,7 @@ const Filters: React.FC = () => {
                 type="checkbox"
                 name="oneStop"
                 onChange={() => onFilterChange("oneStop")}
-                checked={filterBy["oneStop"]}
+                checked={filterType["oneStop"]}
               />
             <span className={styles.checkBox}></span> 1 пересадка
             </label>
@@ -72,7 +71,7 @@ const Filters: React.FC = () => {
                 type="checkbox"
                 name="twoStop"
                 onChange={() => onFilterChange("twoStop")}
-                checked={filterBy["twoStop"]}
+                checked={filterType["twoStop"]}
               />
               <span className={styles.checkBox}></span> 2 пересадки
             </label>
@@ -85,7 +84,7 @@ const Filters: React.FC = () => {
                 type="checkbox"
                 name="threeStop"
                 onChange={() => onFilterChange("threeStop")}
-                checked={filterBy["threeStop"]}
+                checked={filterType["threeStop"]}
               />
             <span className={styles.checkBox}></span> 3 пересадки
             </label>

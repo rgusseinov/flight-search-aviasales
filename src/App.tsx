@@ -12,10 +12,12 @@ const App: React.FC = () => {
     dispatch(loadTickets());
   }, []);
 
-    return (<div>
-      <Header />
-      <Main />
-    </div>);
+    return (
+      <div>
+        <Header />
+        <Main />
+      </div>
+    );
 };
 
 export default App;

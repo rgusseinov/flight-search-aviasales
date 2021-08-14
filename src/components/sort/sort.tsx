@@ -1,18 +1,16 @@
 import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSortBy } from '../../features/filters/actions';
+import { setSortBy } from '../../features/sort/actions';
 import { useTypedSelector } from '../../store';
 import classes from './sort.module.css';
 
 const Sort: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { sortBy } = useTypedSelector(({ filters }) => filters);
+  const { sortType } = useTypedSelector(({ sort }) => sort);
 
-  // top sort
   const onFilterTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const sortType = e.target.value;
-    dispatch(setSortBy(sortType));
+    dispatch(setSortBy(e.target.value));
   };
 
   return (
@@ -20,9 +18,9 @@ const Sort: React.FC = () => {
       <label> 
         <input
           type="radio"
-          name="sortBy"
+          name="sortType"
           value="price"
-          checked={sortBy === 'price' ? true : false}
+          checked={sortType === 'price' ? true : false}
           onChange={onFilterTypeChange}
         />
         Самый дешевый </label>
@@ -30,9 +28,9 @@ const Sort: React.FC = () => {
       <label>
         <input
           type="radio"
-          name="sortBy"
+          name="sortType"
           value="duration"
-          checked={sortBy === 'duration' ? true : false}
+          checked={sortType === 'duration' ? true : false}
           onChange={onFilterTypeChange}
         />
         Самый быстрый </label>
