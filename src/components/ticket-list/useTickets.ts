@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { IFilterType } from "../../interfaces/filter";
 import { ITicket } from "../../interfaces/ticket";
 import { useTypedSelector } from "../../store";
-import { filterByStops, sortByCheap, sortByFast } from "../../utils/utils";
+import { filterByStops, sortByPrice, sortByFlightTime } from "../../utils/utils";
 
 export default () => {
   const { items } = useTypedSelector(({ tickets }) => tickets);
@@ -10,7 +10,7 @@ export default () => {
   const {sortType} = useTypedSelector(({ sort }) => sort);
 
   const getFilterTickets = (tickets: ITicket[], sortType: string, filterType: IFilterType) => {
-    let result: ITicket[] = [];    
+    let result: ITicket[] = [];
 
     if (filterType.direct){
       result.push(...filterByStops(tickets, 0));
@@ -28,10 +28,12 @@ export default () => {
       result.push(...filterByStops(tickets, 3));
     }
 
+    if (!filterType.direct && !filterType.oneStop && !filterType.twoStop && !filterType.threeStop) result = tickets;
+
     if (sortType && sortType == 'price'){
-      result = result.slice().sort(sortByCheap);
+      result = result.slice().sort(sortByPrice);
     } else if (sortType && sortType == 'duration'){
-      result = result.slice().sort(sortByFast);
+      result = result.slice().sort(sortByFlightTime);
     }
 
     return result;

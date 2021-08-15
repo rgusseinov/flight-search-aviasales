@@ -24,15 +24,17 @@ export function getArrivalTime(date: any, durationMinutes: number){
   return h + ':' + m;
 }
 
-export function sortByCheap(ticketA: ITicket, ticketB: ITicket){
+export function sortByPrice(ticketA: ITicket, ticketB: ITicket){
   if (ticketA.price > ticketB.price) return 1;
   if (ticketA.price < ticketB.price) return -1;
   return 0;
 }
 
-export const sortByFast = (ticketA: ITicket, ticketB: ITicket) => {
-  if (ticketA.segments[0].duration > ticketB.segments[0].duration && ticketA.segments[1].duration > ticketB.segments[1].duration) return 1;
-  if (ticketA.segments[0].duration < ticketB.segments[0].duration && ticketA.segments[1].duration < ticketB.segments[1].duration) return -1;
+export const sortByFlightTime = (ticketA: ITicket, ticketB: ITicket) => {
+  const flightFrom = ticketA.segments[0].duration + ticketA.segments[1].duration;
+  const flightTo = ticketB.segments[0].duration + ticketB.segments[1].duration;
+
+  if (flightFrom > flightTo) return 1; else if (flightFrom < flightTo) return -1;
   return 0;
 };
 

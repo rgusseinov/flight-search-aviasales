@@ -6,7 +6,7 @@ import classes from './load-more.module.css';
 const LoadMore: React.FC<loadMoreProps> = ({ onTicketLimitChange }) => {
  return (
   <div className={classes.cardListItemLoadmore} onClick={(e) => onTicketLimitChange(e)}>
-    <span> Показать еще {LOAD_MORE_COUNT} билета! </span>
+    <span> Показать еще {LOAD_MORE_COUNT} билетов! </span>
   </div>
  );
 };

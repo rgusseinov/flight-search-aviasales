@@ -15,6 +15,8 @@ const TicketList: React.FC = () => {
     setTicketLimit(ticketLimit + LOAD_MORE_COUNT);
   };
 
+ 
+
   return (
     <div className={styles.cardList}>
       {
