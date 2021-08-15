@@ -1,6 +1,6 @@
 import { ITicket } from "../interfaces/ticket";
 
-export const LOAD_MORE_COUNT = 10;
+export const LOAD_MORE_COUNT = 5;
 
 export function convertMinuteToHM(minutes: number){
   let rhours, minute, result = null;
@@ -24,12 +24,16 @@ export function getArrivalTime(date: any, durationMinutes: number){
   return h + ':' + m;
 }
 
-export const sortByCheap = (field: any) => {
-  return (a: any, b:any) => (a[field] > b[field]) ? 1 : -1;
-};
+export function sortByCheap(ticketA: ITicket, ticketB: ITicket){
+  if (ticketA.price > ticketB.price) return 1;
+  if (ticketA.price < ticketB.price) return -1;
+  return 0;
+}
 
-export const sortByFast = (field: any) => {
-  return (a:any, b:any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
+export const sortByFast = (ticketA: ITicket, ticketB: ITicket) => {
+  if (ticketA.segments[0].duration > ticketB.segments[0].duration && ticketA.segments[1].duration > ticketB.segments[1].duration) return 1;
+  if (ticketA.segments[0].duration < ticketB.segments[0].duration && ticketA.segments[1].duration < ticketB.segments[1].duration) return -1;
+  return 0;
 };
 
 export const filterByStops = (tickets:ITicket[], stops: number) => {

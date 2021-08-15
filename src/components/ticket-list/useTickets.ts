@@ -1,44 +1,45 @@
 import { useMemo } from "react";
+import { IFilterType } from "../../interfaces/filter";
 import { ITicket } from "../../interfaces/ticket";
 import { useTypedSelector } from "../../store";
 import { filterByStops, sortByCheap, sortByFast } from "../../utils/utils";
 
 export default () => {
   const { items } = useTypedSelector(({ tickets }) => tickets);
-  const filterBy = useTypedSelector(({ filters }) => filters);
+  const filterType = useTypedSelector(({ filters }) => filters);
   const {sortType} = useTypedSelector(({ sort }) => sort);
 
-  const getFilterTickets = (tickets: ITicket[], sortType: string, filterBy: any) => {
-    let result = [];    
+  const getFilterTickets = (tickets: ITicket[], sortType: string, filterType: IFilterType) => {
+    let result: ITicket[] = [];    
 
-    if (filterBy.direct){
+    if (filterType.direct){
       result.push(...filterByStops(tickets, 0));
     }
     
-    if (filterBy.oneStop){
+    if (filterType.oneStop){
       result.push(...filterByStops(tickets, 1));
     }
 
-    if (filterBy.twoStop){
+    if (filterType.twoStop){
       result.push(...filterByStops(tickets, 2));
     }
  
-    if (filterBy.threeStop){
+    if (filterType.threeStop){
       result.push(...filterByStops(tickets, 3));
     }
 
     if (sortType && sortType == 'price'){
-      result = result.slice().sort(sortByCheap('price'));
+      result = result.slice().sort(sortByCheap);
     } else if (sortType && sortType == 'duration'){
-      result = result.slice().sort(sortByFast('duration'));
+      result = result.slice().sort(sortByFast);
     }
 
     return result;
   }; 
 
   const tickets = useMemo(() => {
-    return getFilterTickets(items, sortType, filterBy);
-  }, [items, sortType, filterBy]);
+    return getFilterTickets(items, sortType, filterType);
+  }, [items, sortType, filterType]);
 
   return tickets;
 

@@ -1,4 +1,4 @@
-.sidebar {
+.filter {
   display: flex;
 }
 
@@ -48,8 +48,6 @@ div.filter-item:hover {
   margin-bottom: 0.5em;
 }
 
-
-
 /* Check */
 
 .check {
@@ -65,7 +63,7 @@ div.filter-item:hover {
 
 .checkBox {
   position: absolute;
-  margin-top: 0.1em;
+  margin-top: 0.2em;
   margin-left: -1.5em;
   width: 1.0em;
   height: 1.0em;

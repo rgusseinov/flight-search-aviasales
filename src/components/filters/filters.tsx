@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import styles from './filters.module.css';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
-import { setFilterAll, setFilterBy } from '../../features/filters/actions';
+import { setFilterType, setFilterTypeAll } from '../../features/filters/actions';
 import { useTypedSelector } from '../../store';
 
 const Filters: React.FC = () => {
@@ -12,16 +12,16 @@ const Filters: React.FC = () => {
 
   const dispatch = useDispatch();
   const onFilterChange = (filter: string) => { 
-    dispatch(setFilterBy(filter));
+    dispatch(setFilterType(filter));
   };
   
   const onAllFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked: boolean = e.target.checked;
-    dispatch(setFilterAll(checked));
+    dispatch(setFilterTypeAll(checked));
   };
 
   return (
-    <div className={cn(styles.sidebar)}>
+    <div className={cn(styles.filter)}>
       <div className={cn(styles.filterContainer)}>
         <div className={cn(styles.header)}> Количество пересадок </div>
 

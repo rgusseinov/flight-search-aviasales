@@ -14,4 +14,3 @@ export const loadTickets = () => async (dispatch: Dispatch<TicketsDispatchTypes>
   });
   
 };
-

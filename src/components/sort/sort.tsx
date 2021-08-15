@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSortBy } from '../../features/sort/actions';
+import { setSortType } from '../../features/sort/actions';
 import { useTypedSelector } from '../../store';
 import classes from './sort.module.css';
 
@@ -10,12 +10,12 @@ const Sort: React.FC = () => {
   const { sortType } = useTypedSelector(({ sort }) => sort);
 
   const onFilterTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSortBy(e.target.value));
+    dispatch(setSortType(e.target.value));
   };
-
+  
   return (
     <div className={classes.sortFilter}>
-      <label> 
+      <label>
         <input
           type="radio"
           name="sortType"
@@ -23,7 +23,8 @@ const Sort: React.FC = () => {
           checked={sortType === 'price' ? true : false}
           onChange={onFilterTypeChange}
         />
-        Самый дешевый </label>
+        <span> Самый дешевый </span> 
+      </label>
 
       <label>
         <input
@@ -33,16 +34,8 @@ const Sort: React.FC = () => {
           checked={sortType === 'duration' ? true : false}
           onChange={onFilterTypeChange}
         />
-        Самый быстрый </label>
-
-      <label htmlFor="radioOptimal">
-        <input 
-          type="radio"
-          id="radioOptimal"
-          name="optimal"
-          value="optimal"
-        />
-        Оптимальный </label>
+        <span> Самый быстрый </span>
+      </label>
      
     </div>
   );
