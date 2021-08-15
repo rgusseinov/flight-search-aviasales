@@ -1,7 +1,7 @@
 import { SET_FILTER_ALL, SET_FILTER_BY } from "./actionTypes";
 
 const initialState = {
-  direct: false,
+  direct: true,
   oneStop: false,
   twoStop: false,
   threeStop: false
