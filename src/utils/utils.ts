@@ -24,12 +24,18 @@ export function getArrivalTime(date: any, durationMinutes: number){
   return h + ':' + m;
 }
 
-export const sortByCheap = (field: any) => {
-  return (a: any, b:any) => (a[field] > b[field]) ? 1 : -1;
-};
+export function sortByPrice(ticketA: ITicket, ticketB: ITicket){
+  if (ticketA.price > ticketB.price) return 1;
+  if (ticketA.price < ticketB.price) return -1;
+  return 0;
+}
 
-export const sortByFast = (field: any) => {
-  return (a:any, b:any) => (a.segments[0][field] > b.segments[0][field]) ? 1 : -1;
+export const sortByFlightTime = (ticketA: ITicket, ticketB: ITicket) => {
+  const flightFrom = ticketA.segments[0].duration + ticketA.segments[1].duration;
+  const flightTo = ticketB.segments[0].duration + ticketB.segments[1].duration;
+
+  if (flightFrom > flightTo) return 1; else if (flightFrom < flightTo) return -1;
+  return 0;
 };
 
 export const filterByStops = (tickets:ITicket[], stops: number) => {
@@ -37,5 +43,20 @@ export const filterByStops = (tickets:ITicket[], stops: number) => {
     const [first, second] = ticket.segments;
     return first.stops.length === stops && second.stops.length === stops;
   });
+};
+
+export const getStopsSentense = (countStops: number) => {
+  let stopsSentence: string;
+  if (countStops === 0) stopsSentence = `без пересадок`;
+  else if (countStops === 1) stopsSentence = `${countStops} пересадка`;
+  else if (countStops === 2) stopsSentence = `${countStops} пересадки`;
+  else if (countStops === 3) stopsSentence = `${countStops} пересадки`;
+  else stopsSentence = `${countStops} пересадок`;
+  
+  return stopsSentence;
+};
+
+export const getCarrierLogo = (carrier: string) => {
+  return `https://pics.avs.io/99/36/${carrier}.png`;
 };
 

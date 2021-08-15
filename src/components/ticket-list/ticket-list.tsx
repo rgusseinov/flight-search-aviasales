@@ -4,12 +4,10 @@ import { LOAD_MORE_COUNT } from '../../utils/utils';
 import LoadMore from '../load-more/load-more';
 import TicketItem from '../ticket-item/ticket-item';
 import styles from './ticket-list.module.css';
+import useTickets from './useTickets';
 
-interface Props {
-  tickets: ITicket[]
-}
-
-const TicketList: React.FC<Props> = ({ tickets }) => {
+const TicketList: React.FC = () => {
+  const tickets = useTickets();
   const [ticketLimit, setTicketLimit] = useState<number>(LOAD_MORE_COUNT);
 
   // Lode more button
@@ -17,16 +15,15 @@ const TicketList: React.FC<Props> = ({ tickets }) => {
     setTicketLimit(ticketLimit + LOAD_MORE_COUNT);
   };
 
-  // const newList = tickets.filter(ticket => ticket.price <= 15000);
-  // console.log(newList);
+ 
 
   return (
     <div className={styles.cardList}>
       {
-        tickets && tickets.slice(0, ticketLimit).map((ticket: ITicket, key: number) => {
+        tickets && tickets.slice(0, ticketLimit).map((ticket: ITicket, index: number) => {
           return (
             <TicketItem
-              key={key}
+              key={index}
               price={ticket.price}
               carrier={ticket.carrier}
               segments={ticket.segments}

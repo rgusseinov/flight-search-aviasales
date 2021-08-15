@@ -1,4 +1,4 @@
-.sidebar {
+.filter {
   display: flex;
 }
 
@@ -31,12 +31,12 @@
   align-items: center;
 }
 
-div.filter-item:hover {
+div.filterItem:hover {
   background-color: #F1FCFF;
   cursor: pointer;
 }
 
-.filter-item .label{
+.filterItem .label{
   font-size: 18px;
   margin-left: 10px;
   color: #4A4A4A;
@@ -45,10 +45,7 @@ div.filter-item:hover {
 
 .option {
   display: block;
-  margin-bottom: 0.5em;
 }
-
-
 
 /* Check */
 
@@ -65,7 +62,7 @@ div.filter-item:hover {
 
 .checkBox {
   position: absolute;
-  margin-top: 0.1em;
+  margin-top: 0.2em;
   margin-left: -1.5em;
   width: 1.0em;
   height: 1.0em;
@@ -88,7 +85,7 @@ div.filter-item:hover {
 .checkInput:focus + .checkBox {
   box-shadow:
       0 0 0 0.1em #4A90E2,
-      0 0 0 0.2em #7ED321;
+      0 0 0 0.2em #4A90E2;
 }
 
 /* Disabled */
